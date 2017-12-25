@@ -17,117 +17,289 @@ case 'AliGenie.Iot.Device.Discovery':
 
 	$str='{
   header: {
-    namespace: "AliGenie.Iot.Device.Discovery",
-    name: "DiscoveryDevicesResponse",
-    messageId: "%s",
+    namespace: "AliGenie.Iot.Device.Discovery", 
+    name: "DiscoveryDevicesResponse", 
+    messageId: "%s", 
     payLoadVersion: 1
-  },
+  }, 
   payload: {
     devices: [
-      {
-        deviceId: "sensor.temperature_158d0001712cbf",
-        deviceName: "空气监测仪",
-        deviceType: "sensor",
-        zone: "阳台",
-        brand: "homeassistant",
-        model: "小米温湿度传感器",
-        icon: "https://home-assistant.io/demo/favicon-192x192.png",
+    {
+        deviceId: "sensor.mixsensor1", 
+        deviceName: "空气监测仪", 
+        deviceType: "sensor", 
+        zone: "主卧", 
+        brand: "homeassistant", 
+        model: "DIY温湿度PM传感器", 
+        icon: "https://home-assistant.io/demo/favicon-192x192.png", 
         properties: [
+          {
+		"name":"pm2.5",
+		"value":"27"
+          },
+          {
+		"name":"humidity",
+		"value":"27"
+          },
           {
 		"name":"temperature",
 		"value":"27"
           }
-        ],
-        actions: [
+        ], 
+	actions: [
 		"Query",
-		"QueryTemperature",
 		"QueryHumidity",
-		"QueryPowerState"
-        ],
+		"QueryTemperature",
+		"QueryPm2.5"
+        ], 
         extension: {
           link: "https://www.baidu.com"
         }
-},
-{
-        deviceId: "switch.plug_158d000163ae00",
-        deviceName: "插座",
-        deviceType: "switch",
-        zone: "阳台",
-        brand: "homeassistant",
-        model: "小米网关",
-        icon: "",
+    },
+    {
+	deviceId: "sensor.illumination_34ce008dc8c3", 
+        deviceName: "空气监测仪", 
+        deviceType: "sensor", 
+        zone: "餐厅", 
+        brand: "homeassistant", 
+        model: "小米网关光照传感器", 
+        icon: "https://home-assistant.io/demo/favicon-192x192.png", 
+        properties: [
+          {
+		"name":"illumination",
+		"value":"27"
+          }
+        ], 
+        actions: [
+		"Query"
+        ], 
+        extension: {
+          link: "https://www.baidu.com"
+        }
+    },
+    {
+        deviceId: "sensor.mixsensor_158d0001712cbf", 
+        deviceName: "空气监测仪", 
+        deviceType: "sensor", 
+        zone: "阳台", 
+        brand: "homeassistant", 
+        model: "小米温湿度传感器", 
+        icon: "https://home-assistant.io/demo/favicon-192x192.png", 
+        properties: [
+          {
+		"name":"humidity",
+		"value":"27"
+          },
+          {
+		"name":"temperature",
+		"value":"27"
+          }
+        ], 
+        actions: [
+		"QueryHumidity",
+		"QueryTemperature"
+        ], 
+        extension: {
+          link: "https://www.baidu.com"
+        }
+    },
+    {
+        deviceId: "light.yeelight_rgb_7811dc6817ed", 
+        deviceName: "灯", 
+        deviceType: "light", 
+        zone: "餐厅", 
+        brand: "homeassistant", 
+        model: "yeelight", 
+        icon: "https://home-assistant.io/demo/favicon-192x192.png", 
         properties: [
           {
             status: "off"
           }
-        ],
+        ], 
         actions: [
-          "TurnOn",
-          "TurnOff",
-          "Query",
-	  "QueryPowerState"
-        ],
-        extension: {
-          link: "https://www.baidu.com"
-        }
-      },
-      {
-        deviceId: "light.gateway_light_34ce008dc8c3",
-        deviceName: "落地灯",
-        deviceType: "light",
-        zone: "客厅",
-        brand: "homeassistant",
-        model: "小米网关",
-        icon: "https://home-assistant.io/demo/favicon-192x192.png",
-        properties: [
-          {
-            status: "off"
-          }
-        ],
-        actions: [
-          "TurnOn",
-	  "TurnOff",
+          "TurnOn", 
+          "TurnOff", 
+	  "SetBrightness",
+	  "SetColor",
 	  "QueryBrightness",
+	  "QueryPowerState", 
+	  "QueryColor", 
 	  "QueryPowerState",
-	  "QueryColor",
-          "Query"
-        ],
+	  "Query"
+        ], 
         extension: {
           link: "https://www.baidu.com"
-        }
-      },
-      {
-        deviceId: "media_player.sony_bravia_tv",
-        deviceName: "电视",
-        deviceType: "television",
-        zone: "客厅",
-        brand: "homeassistant",
-        model: "Sony Tv",
-        icon: "https://home-assistant.io/demo/favicon-192x192.png",
+	}
+    },
+    {
+        deviceId: "switch.bookroom_key2_008ca89c_ch1", 
+        deviceName: "灯", 
+        deviceType: "light", 
+        zone: "书房", 
+        brand: "homeassistant", 
+        model: "hassmart", 
+        icon: "https://home-assistant.io/demo/favicon-192x192.png", 
         properties: [
           {
             status: "off"
           }
-        ],
+        ], 
         actions: [
-          "TurnOn",
-          "TurnOff",
-          "Query",
-	  "QueryPowerState",
-          "SelectChannel",
-          "AdjustUpChannel",
-          "AdjustDownChannel",
-          "AdjustUpVolume",
-          "AdjustDownVolume",
-          "SetVolume",
-          "SetMute",
-          "CancelMute",
-          "Play",
-          "Pause",
-          "Continue",
-          "Next",
+          "TurnOn", 
+          "TurnOff", 
+	  "QueryPowerState"
+        ], 
+        extension: {
+          link: "https://www.baidu.com"
+	}
+    },
+    {
+        deviceId: "switch.bookroom_key2_008ca89c_ch2", 
+        deviceName: "灯", 
+        deviceType: "light", 
+        zone: "书房", 
+        brand: "homeassistant", 
+        model: "hassmart", 
+        icon: "https://home-assistant.io/demo/favicon-192x192.png", 
+        properties: [
+          {
+            status: "off"
+          }
+        ], 
+        actions: [
+          "TurnOn", 
+          "TurnOff", 
+	  "QueryPowerState"
+        ], 
+        extension: {
+          link: "https://www.baidu.com"
+	}
+    },
+    {
+        deviceId: "switch.bathroom1_key2_008c4410_ch1", 
+        deviceName: "灯", 
+        deviceType: "light", 
+        zone: "卫生间", 
+        brand: "homeassistant", 
+        model: "hassmart", 
+        icon: "https://home-assistant.io/demo/favicon-192x192.png", 
+        properties: [
+          {
+            status: "off"
+          }
+        ], 
+        actions: [
+          "TurnOn", 
+          "TurnOff", 
+	  "QueryPowerState"
+        ], 
+        extension: {
+          link: "https://www.baidu.com"
+	}
+    },
+    {
+        deviceId: "switch.bathroom1_key2_008c4410_ch2", 
+        deviceName: "灯", 
+        deviceType: "light", 
+        zone: "卫生间", 
+        brand: "homeassistant", 
+        model: "hassmart", 
+        icon: "https://home-assistant.io/demo/favicon-192x192.png", 
+        properties: [
+          {
+            status: "off"
+          }
+        ], 
+        actions: [
+          "TurnOn", 
+          "TurnOff", 
+	  "QueryPowerState"
+        ], 
+        extension: {
+          link: "https://www.baidu.com"
+	}
+    },
+    {
+        deviceId: "switch.plug_158d000163ae00", 
+        deviceName: "净化器", 
+        deviceType: "airpurifier", 
+        zone: "阳台", 
+        brand: "homeassistant", 
+        model: "负离子发生器", 
+        icon: "https://home-assistant.io/demo/favicon-192x192.png", 
+        properties: [
+          {
+            status: "off"
+          }
+        ], 
+        actions: [
+          "TurnOn", 
+          "TurnOff", 
+	  "QueryPowerState"
+        ], 
+        extension: {
+          link: "https://www.baidu.com"
+        }
+      }, 
+      {
+        deviceId: "light.gateway_light_34ce008dc8c3", 
+        deviceName: "落地灯", 
+        deviceType: "light", 
+        zone: "客厅", 
+        brand: "homeassistant", 
+        model: "小米网关", 
+        icon: "https://home-assistant.io/demo/favicon-192x192.png", 
+        properties: [
+          {
+            status: "off"
+          }
+        ], 
+        actions: [
+          "TurnOn", 
+	  "TurnOff",
+	  "SetBrightness",
+	  "SetColor",
+	  "QueryBrightness",
+	  "QueryPowerState", 
+	  "QueryColor", 
+          "Query"
+        ], 
+        extension: {
+          link: "https://www.baidu.com"
+        }
+      }, 
+      {
+        deviceId: "media_player.sony_bravia_tv", 
+        deviceName: "电视", 
+        deviceType: "television", 
+        zone: "客厅", 
+        brand: "homeassistant", 
+        model: "Sony Tv", 
+        icon: "https://home-assistant.io/demo/favicon-192x192.png", 
+        properties: [
+          {
+            status: "off"
+          }
+        ], 
+        actions: [
+          "TurnOn", 
+          "TurnOff", 
+          "Query", 
+	  "QueryPowerState", 
+          "SelectChannel", 
+          "AdjustUpChannel", 
+          "AdjustDownChannel", 
+          "AdjustUpVolume", 
+          "AdjustDownVolume", 
+          "SetVolume", 
+          "SetMute", 
+          "CancelMute", 
+          "Play", 
+          "Pause", 
+          "Continue", 
+          "Next", 
           "Previous"
-        ],
+        ], 
         extension: {
           link: "https://www.baidu.com"
         }
@@ -155,7 +327,7 @@ case 'AliGenie.Iot.Device.Control':
 			}';
 		$resultStr = sprintf($str,$result->name,$messageId,$result->deviceId);
 		//error_log($resultStr);
-
+		
 	}
 	else
 	{
@@ -191,14 +363,14 @@ case 'AliGenie.Iot.Device.Query':
                            },
 			   "properties":[
 			    {
-	   	              "name":"powerstate",
+	   	              "name":"powerstate",    
 	   	              "value":"%s"
 		            }
 	                    ]
 
 			}';
 		$resultStr = sprintf($str,$result->name,$messageId,$result->deviceId,$result->powerstate);
-
+		
 	}
 	else
 	{
@@ -219,7 +391,7 @@ case 'AliGenie.Iot.Device.Query':
 	}
 	break;
 default:
-	$resultStr='Nothing return,there is an error~!!';
+	$resultStr='Nothing return,there is an error~!!';	
 }
 error_log('-------');
 error_log('----get-request---');
