@@ -159,6 +159,9 @@ function  Device_status($obj)
 	$response_name = $obj->header->name.'Response';
 	switch(substr($deviceId,0,stripos($deviceId,".")))
 	{
+	case 'fan':
+		$device_ha='fan';
+		break;
 	case 'switch':
 		$device_ha='switch';
 		break;
