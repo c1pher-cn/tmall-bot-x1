@@ -11,5 +11,8 @@ https://github.com/bshaffer/oauth2-server-php/blob/php5.2-develop/README.md
    4.该方式目前只能自己搭自己用（技能只能在测试状态，无法发布）
 不足：
    目前未完成鉴权，完成授权之后后续与天猫开放平台之间的通讯并未验证token的合法性。
-   目前只支持homeassistant里light、switch、media_player类型设备的控制，和这三个设备电源状态的查看。
-部署配置方法详见 https://bbs.hassbian.com/thread-1862-1-1.html
+   目前只支持homeassistant里light、switch、media_player、fan类型设备的控制，和这四个设备电源状态的查看。
+   
+部署配置方法详见 
+	我的博客：				https://www.c1pher.cn/?p=170   或 
+	瀚思彼岸技术论坛：	https://bbs.hassbian.com/thread-1862-1-1.html
