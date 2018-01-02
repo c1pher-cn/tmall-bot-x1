@@ -25,8 +25,8 @@ case 'AliGenie.Iot.Device.Discovery':
   payload: {
     devices: [
     {
-        deviceId: "sensor.mixsensor1", 
-        deviceName: "空气监测仪", 
+        deviceId: "sensor.temperature1", 
+        deviceName: "传感器", 
         deviceType: "sensor", 
         zone: "主卧", 
         brand: "homeassistant", 
@@ -58,7 +58,7 @@ case 'AliGenie.Iot.Device.Discovery':
     },
     {
 	deviceId: "sensor.illumination_34ce008dc8c3", 
-        deviceName: "空气监测仪", 
+        deviceName: "传感器", 
         deviceType: "sensor", 
         zone: "餐厅", 
         brand: "homeassistant", 
@@ -71,15 +71,16 @@ case 'AliGenie.Iot.Device.Discovery':
           }
         ], 
         actions: [
-		"Query"
+		"Query",
+		"QueryIllumination"
         ], 
         extension: {
           link: "https://www.baidu.com"
         }
     },
     {
-        deviceId: "sensor.mixsensor_158d0001712cbf", 
-        deviceName: "空气监测仪", 
+        deviceId: "sensor.temperature_158d0001712cbf", 
+        deviceName: "传感器", 
         deviceType: "sensor", 
         zone: "阳台", 
         brand: "homeassistant", 
@@ -351,24 +352,98 @@ case 'AliGenie.Iot.Device.Query':
 	$result = Device_status($obj);
 	if($result->result == "True" )
 	{
-		$str='{
-  			"header":{
-  			    "namespace":"AliGenie.Iot.Device.Control",
-  			    "name":"%s",
-  			    "messageId":"%s",
- 			     "payLoadVersion":1
-			   },
-			   "payload":{
-			      "deviceId":"%s"
-                           },
-			   "properties":[
-			    {
-	   	              "name":"powerstate",    
-	   	              "value":"%s"
-		            }
-	                    ]
+		if(strpos($result->deviceId,"temperature"))
+		{
+			
+			$str='{
+  	  			"header":{
+  	  			    "namespace":"AliGenie.Iot.Device.Query",
+  	  			    "name":"%s",
+  	  			    "messageId":"%s",
+ 	 			     "payLoadVersion":1
+				   },
+				   "payload":{
+				      "deviceId":"%s"
+                               },
+				   "properties":[
+				    {
+		   	              "name":"temperature",
+		   	              "value":"%s"
+			            }
+		                    ]
 
-			}';
+				}';
+				$result->name="QueryTemperatureResponse";
+		}
+		 elseif(strpos($result->deviceId,"illumination"))
+		{
+			
+			$str='{
+  	  			"header":{
+  	  			    "namespace":"AliGenie.Iot.Device.Query",
+  	  			    "name":"%s",
+  	  			    "messageId":"%s",
+ 	 			     "payLoadVersion":1
+				   },
+				   "payload":{
+				      "deviceId":"%s"
+                               },
+				   "properties":[
+				    {
+		   	              "name":"illumination",
+		   	              "value":"%s"
+			            }
+		                    ]
+
+				}';
+				$result->name="QueryIlluminationResponse";
+		}
+		 elseif(strpos($result->deviceId,"humidity"))
+		{
+			
+			$str='{
+  	  			"header":{
+  	  			    "namespace":"AliGenie.Iot.Device.Query",
+  	  			    "name":"%s",
+  	  			    "messageId":"%s",
+ 	 			     "payLoadVersion":1
+				   },
+				   "payload":{
+				      "deviceId":"%s"
+                               },
+				   "properties":[
+				    {
+		   	              "name":"humidity",
+		   	              "value":"%s"
+			            }
+		                    ]
+
+				}';
+				$result->name="QueryHumidityResponse";
+		}
+		else
+		{
+			
+			$str='{
+  	  			"header":{
+  	  			    "namespace":"AliGenie.Iot.Device.Query",
+  	  			    "name":"%s",
+  	  			    "messageId":"%s",
+ 	 			     "payLoadVersion":1
+				   },
+				   "payload":{
+				      "deviceId":"%s"
+                               },
+				   "properties":[
+				    {
+		   	              "name":"powerstate",
+		   	              "value":"%s"
+			            }
+		                    ]
+
+				}';
+		}	
+		
 		$resultStr = sprintf($str,$result->name,$messageId,$result->deviceId,$result->powerstate);
 		
 	}

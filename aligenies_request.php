@@ -55,10 +55,10 @@ class Response{
 			if($properties!="")
 			{       
 				$this->powerstate=$properties;
-				if($properties!="off")
-				{
-					$this->powerstate="on";
-				}
+		#		if($properties!="off")
+		#		{
+		#			$this->powerstate="on";
+		#		}
 			}else
 			{
 		                $this->errorCode = "SERVICE_ERROR";
