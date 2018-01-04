@@ -6,19 +6,14 @@ https://github.com/bshaffer/oauth2-server-php/blob/php5.2-develop/README.md
 更高版本的php可以使用正式版的oauth2-server-php
 
 该方案有几个硬性要求：
-
-   1.homeassistant公网可以访问
-   
+   1.homeassistant公网可以访问   
    2.搭建公网可访问的https的oauth2服务(对应本项目中的 authorize.php、token.php、server.php)
-   
    3.搭建公网可访问的网关服务器，将天猫开放平台的语义转换成HA的api，代理调用HA(gate.php、homeassistant_conf.php、aligenies_request.php）。 
-   
    4.该方式目前只能自己搭自己用（技能只能在测试状态，无法发布，不需要发布)
-   
-不足：
-   目前未完成鉴权，完成授权之后后续与天猫开放平台之间的通讯并未验证token的合法性。
-   目前只支持homeassistant里light、switch、media_player、fan类型设备的控制，和这四个设备电源状态的查看。
-   目前支持温湿度传感器的查询(要求传感器id里必须包含 temperature、humidity的关键字)，其他传感器天猫官方还未支持。
+不足点
+    目前未完成鉴权，完成授权之后后续与天猫开放平台之间的通讯并未验证token的合法性。
+    目前只支持homeassistant里light、switch、media_player、fan类型设备的控制，和这四个设备电源状态的查看。
+    目前支持温湿度传感器的查询(要求传感器id里必须包含 temperature、humidity的关键字)，其他传感器天猫官方还未支持。
    	
 其他设备类型可能我没有的请提交设备id给我
    
