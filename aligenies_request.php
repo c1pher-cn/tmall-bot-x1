@@ -261,6 +261,9 @@ function  Device_control($obj)
 	$response_name = $obj->header->name.'Response';
 	switch(substr($deviceId,0,stripos($deviceId,".")))
 	{
+	case 'cover':
+		$device_ha='cover';
+		break;
 	case 'fan':
 		$device_ha='fan';
 		break;
@@ -278,11 +281,26 @@ function  Device_control($obj)
 	}
 	switch($obj->header->name)
 	{
+	case 'Pause':
+		$action='stop';
+		if ($device_ha=='cover'):
+		{
+			$action='stop_cover';
+		}
+		break;
 	case 'TurnOn':
 		$action='turn_on';
+		if ($device_ha=='cover'):
+		{
+			$action='open_cover';
+		}
 		break;
 	case 'TurnOff':
 		$action='turn_off';
+		if ($device_ha=='cover'):
+		{
+			$action='close_cover';
+		}
 		break;
 	case 'SetBrightness':
 		$action='set_bright';
