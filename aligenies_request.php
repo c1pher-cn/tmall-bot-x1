@@ -283,21 +283,21 @@ function  Device_control($obj)
 	{
 	case 'Pause':
 		$action='stop';
-		if ($device_ha=='cover'):
+		if ($device_ha=='cover')
 		{
 			$action='stop_cover';
 		}
 		break;
 	case 'TurnOn':
 		$action='turn_on';
-		if ($device_ha=='cover'):
+		if ($device_ha=='cover')
 		{
 			$action='open_cover';
 		}
 		break;
 	case 'TurnOff':
 		$action='turn_off';
-		if ($device_ha=='cover'):
+		if ($device_ha=='cover')
 		{
 			$action='close_cover';
 		}
