@@ -306,6 +306,7 @@ $arr = json_decode($query_response);
 $binary_sensor=array();
 $sensor=array();
 $light=array();
+$cover=array();
 $switch=array();
 $fan=array();
 $media_player=array();
@@ -323,6 +324,10 @@ for($i=0;$i<$num;++$i){
 		array_push($light,$arr[$i]);
 		continue;
 	}
+	if (strstr($arr[$i]->entity_id,"cover.")){
+		array_push($cover,$arr[$i]);
+		continue;
+	}
 	if (strstr($arr[$i]->entity_id,"switch.")){
 		array_push($switch,$arr[$i]);
 		continue;
@@ -337,7 +342,11 @@ for($i=0;$i<$num;++$i){
 	}
 }
 $hadevice=array();
-
+$num = count($cover); 
+for($i=0;$i<$num;++$i){ 
+  array_push($hadevice,array("entity_id" => $cover[$i]->entity_id,"friendly_name" => $cover[$i]->attributes->friendly_name));
+}	  
+	
 $num = count($light); 
 for($i=0;$i<$num;++$i){ 
   array_push($hadevice,array("entity_id" => $light[$i]->entity_id,"friendly_name" => $light[$i]->attributes->friendly_name));
