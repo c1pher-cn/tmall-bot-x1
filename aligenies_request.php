@@ -335,6 +335,13 @@ function  Device_control($obj)
 	if($obj->header->name == "SetBrightness" || $obj->header->name == "SetVolume" || $obj->header->name == "SetColor")
 	{
 		$value = $obj->payload->value;
+		if ($action=="set_bright")
+		{	
+			$post_array = array (
+				"entity_id" => $deviceId,
+				"brightness_pct" => (int)$value
+			);
+		}
 		if ($action=="set_color")
 		{	switch($value)
 			{
@@ -350,8 +357,8 @@ function  Device_control($obj)
 				break;
 			case 'Yellow':	
 				$a=255;
-				$b=255;
-				$c=0;
+				$b=200;
+				$c=36;
 				break;
 			case 'Blue':	
 				$a=0;
@@ -395,7 +402,8 @@ function  Device_control($obj)
 				"rgb_color" => array($a,$b,$c)
 			);
 		}
-    		$post_string = json_encode($post_array);
+		$post_string = json_encode($post_array);
+		error_log($post_string);
     		$opts = array(
 			'http' => array(
 				 'method' => "POST",
