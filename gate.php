@@ -110,7 +110,7 @@ case 'AliGenie.Iot.Device.Query':
                                },
 				   "properties":[
 				    {
-		   	              "name":"illumination",
+		   	              "name":"brightness",
 		   	              "value":"%s"
 			            }
 		                    ]
@@ -118,6 +118,29 @@ case 'AliGenie.Iot.Device.Query':
 				}';
 				$result->name="QueryIlluminationResponse";
 		}
+		elseif(strpos($result->deviceId,"pm25"))
+                {
+
+                        $str='{
+                                "header":{
+                                    "namespace":"AliGenie.Iot.Device.Query",
+                                    "name":"%s",
+                                    "messageId":"%s",
+                                     "payLoadVersion":1
+                                   },
+                                   "payload":{
+                                      "deviceId":"%s"
+                               },
+                                   "properties":[
+                                    {
+                                      "name":"pm2.5",
+                                      "value":"%s"
+                                    }
+                                    ]
+
+                                }';
+                                $result->name="QueryHumidityResponse";
+                }
 		 elseif(strpos($result->deviceId,"humidity"))
 		{
 			
