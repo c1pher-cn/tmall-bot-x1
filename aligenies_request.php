@@ -261,6 +261,9 @@ function  Device_control($obj)
 	$response_name = $obj->header->name.'Response';
 	switch(substr($deviceId,0,stripos($deviceId,".")))
 	{
+	case 'vacuum':
+                $device_ha='vacuum';
+                break;
 	case 'cover':
 		$device_ha='cover';
 		break;
@@ -287,6 +290,10 @@ function  Device_control($obj)
 		{
 			$action='stop_cover';
 		}
+		elseif ($device_ha=='vacuum')
+                {
+                        $action='stop';
+                }
 		break;
 	case 'TurnOn':
 		$action='turn_on';
@@ -294,6 +301,10 @@ function  Device_control($obj)
 		{
 			$action='open_cover';
 		}
+		elseif ($device_ha=='vacuum')
+                {
+                        $action='turn_on';
+                }
 		break;
 	case 'TurnOff':
 		$action='turn_off';
@@ -301,6 +312,11 @@ function  Device_control($obj)
 		{
 			$action='close_cover';
 		}
+		elseif ($device_ha=='vacuum')
+                {
+                        #$action='turn_off';
+                        $action='return_to_base';
+                }
 		break;
 	case 'SetBrightness':
 		$action='set_bright';
