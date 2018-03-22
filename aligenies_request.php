@@ -435,7 +435,7 @@ function  Device_control($obj)
 		$response->put_control_response(True,$response_name,$deviceId,"","");	
 		return $response;
 	}	
-	if($obj->header->name == "TurnOn" || $obj->header->name == "TurnOff")
+	if($obj->header->name == "TurnOn" || $obj->header->name == "TurnOff" || $obj->header->name == "Pause")
 	{
 		$post_array = array (
 			"entity_id" => $deviceId,
