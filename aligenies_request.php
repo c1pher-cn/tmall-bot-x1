@@ -284,17 +284,29 @@ function  Device_control($obj)
 	}
 	switch($obj->header->name)
 	{
-	case 'Pause':
-		$action='stop';
-		if ($device_ha=='cover')
-		{
-			$action='stop_cover';
-		}
-		elseif ($device_ha=='vacuum')
+	case 'Continue':
+                $action='continue';
+                if ($device_ha=='cover')
                 {
-                        $action='stop';
+                        $action='start_cover';
                 }
-		break;
+                elseif ($device_ha=='vacuum')
+                {
+                        $action='start_pause';
+                }
+                break;
+        case 'Pause':
+                $action='stop';
+                if ($device_ha=='cover')
+                {
+                        $action='stop_cover';
+                }
+                elseif ($device_ha=='vacuum')
+                {
+                        $action='start_pause';
+                }
+                break;
+
 	case 'TurnOn':
 		$action='turn_on';
 		if ($device_ha=='cover')
@@ -435,7 +447,7 @@ function  Device_control($obj)
 		$response->put_control_response(True,$response_name,$deviceId,"","");	
 		return $response;
 	}	
-	if($obj->header->name == "TurnOn" || $obj->header->name == "TurnOff" || $obj->header->name == "Pause")
+	if($obj->header->name == "TurnOn" || $obj->header->name == "TurnOff" || $obj->header->name == "Pause"  ||  $obj->header->name == "Continue")
 	{
 		$post_array = array (
 			"entity_id" => $deviceId,
