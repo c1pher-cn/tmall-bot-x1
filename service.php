@@ -1,8 +1,11 @@
 <?php
 require_once __DIR__.'/server.php';
-$db = new PDO($dsn, $user, $pwd);
-
-
+if(empty($_SESSION['userinfo'])){
+        $_SESSION['userurl'] = $_SERVER['REQUEST_URI'];
+        echo "{\"code\" : \"v\",\"Msg\":\"v\"}";
+	die;
+}
+$user_id = $_SESSION['userinfo']['user_id'];
 
 
 $v = isset($_GET['v']) ? $_GET['v'] : "v";
@@ -15,37 +18,42 @@ if ($v=="v"){
     $deviceName=$_REQUEST['deviceName'];
     $deviceId=$_REQUEST['deviceId'];
     $jsonData=$_REQUEST['jsonData'];
+	$virtual=$_REQUEST['virtual'];
+        $devices=$_REQUEST['states'];
+	if($virtual!="1"){
+		$virtual="0";
+	}
+       	
     
+    if(existDevice($user_id,$deviceId)){
+	#已经存在，更新    
     
-    $rs = $db->query("SELECT* FROM oauth_devices WHERE deviceId='$deviceId'");
-	$row = $rs->fetch();
-
-	//echo count($row);
-    
-    if(count($row)==1){
-    
-    	$count = $db->exec("INSERT INTO oauth_devices SET deviceName = '$deviceName',deviceId='$deviceId',jsonData='$jsonData'");
-    
-    	if($count=="1"){
-        	echo "{\"code\" : \"ok\",\"Msg\":\"增加成功！\"}";
-    
+    	if(updateDevice($user_id,$deviceName,$deviceId,$jsonData,$virtual,$devices)){
+        	echo "{\"code\" : \"ok\",\"Msg\":\"已存在，更新成功！\"}";
     	}
     	else{
-    		echo "{\"code\" : \"err\",\"Msg\":\"增加失败！\"}";
+    		echo "{\"code\" : \"err\",\"Msg\":\"已存在，更新失败！\"}";
     	}
     }
     else{
-    	echo "{\"code\" : \"err\",\"Msg\":\"该设备已存在！\"}";
+	#没有，新增
+        if(insertDevice($user_id,$deviceName,$deviceId,$jsonData,$virtual,$devices))
+	{
+	    echo "{\"code\" : \"ok\",\"Msg\":\"增加成功！\"}";
+	}
+	else{
+	    echo "{\"code\" : \"err\",\"Msg\":\"增加失败！\"}";
+    	}
     }
     //echo "{\"deviceName\" : \"$deviceName\",\"deviceId\":\"$deviceId\",\"jsonData\":\"$count\"}";
 }elseif ($v=="getList"){
-
-    
-    $rs = $db->query("SELECT* FROM oauth_devices WHERE del!='1'");
+	$stm = getDeviceList($user_id);
 	$data=array();
-	while($row = $rs->fetch()){
-      array_push($data,json_decode($row['jsonData'], true));
-    }
+	while($row = $stm->fetch(PDO::FETCH_ASSOC)){
+	        $dataArray = json_decode($row['jsonData'], true);
+		$dataArray = array_merge($dataArray,array("virtual"=>$row['virtual']));
+		array_push($data,$dataArray);
+	}	
 	$a=array(
 		"code"=>"ok",
     	"Msg"=>"获取成功！",
@@ -58,35 +66,27 @@ if ($v=="v"){
 elseif ($v=="del"){
     
     $deviceId=$_REQUEST['deviceId'];
+    $result = deleteDevice($user_id,$deviceId); 
+    $stm = getDeviceList($user_id);
+    $data=array();
+    while($row = $stm->fetch(PDO::FETCH_ASSOC)){
+       //array_push($data,json_decode($row['jsonData'], true));
+        $dataArray = json_decode($row['jsonData'], true);
+        $dataArray = array_merge($dataArray,array("virtual"=>$row['virtual']));
+        array_push($data,$dataArray);
+    }  
     
-    $rs = $db->exec("UPDATE `oauth`.`oauth_devices` SET `del` = '1' WHERE deviceId='$deviceId'");
-    
-    
-    if($rs==1){
+    $a=array(
+        "code"=>"ok",
+        "Msg"=>"删除成功！",
+        "data"=>$data
+    );
 
-        $rs = $db->query("DELETE FROM oauth_devices WHERE del!='1' WHERE deviceId='$deviceId'");
-		$data=array();
-		while($row = $rs->fetch()){
-      		$jsonData=$row['jsonData'];
-      		$jsonData=json_decode($jsonData, true);
-      		array_push($data,$jsonData);
-    	}
-		$a=array(
-			"code"=>"ok",
-    		"Msg"=>"删除成功！",
-    		"data"=>$data
-		);
-
-	    
-    
+    if($result){
+        echo json_encode($a);
     }else{
-        $a=array(
-		"code"=>"err",
-    	"Msg"=>"删除失败！"
-	);
-    
-    }
-    
+        echo "{\"code\" : \"ok\",\"Msg\":\"删除失败！\"}";
+    } 
 	
 
 	echo json_encode($a);

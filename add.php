@@ -1,3 +1,140 @@
+<?php
+include_once( 'server.php' );
+if(empty($_SESSION)||empty($_SESSION['userinfo']))
+{
+        $_SESSION['userurl'] = $_SERVER['REQUEST_URI'];
+	header("Location: /index.php");
+}
+$user_id = $_SESSION['userinfo']['user_id'];
+$user_name = $_SESSION['userinfo']['user_name'];
+$fromwhere = $_SESSION['userinfo']['from'];
+$information = getUserInformation($user_id);
+if ($information['homeassistantURL']==null)
+{
+	echo '新用户';
+	die;
+	$homeassistantURL = 'your homeassistant URL';
+	$homeassistantPASS = 'your homeassistant PASSWORD';
+	$email = 'your email';
+}
+$homeassistantURL = $information['homeassistantURL'];
+$homeassistantPASS = $information['homeassistantPASS'];
+$email = $information['email'];
+
+$url = $homeassistantURL."/api/states?api_password=".$homeassistantPASS;
+$ch = curl_init(); 
+   // set url 
+curl_setopt($ch, CURLOPT_URL, $url); 
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+curl_setopt($ch, CURLOPT_TIMEOUT, 2); //设置整个网络请求最长执行时间为2秒
+curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1); //设置连接目标服务器1秒无响应时判断为超时
+
+#curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+#curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+
+$query_response = curl_exec($ch); 
+$http_code = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+$errorCode =curl_errno($ch);
+if ($http_code >= 400 && $http_code < 500)
+{
+	echo '请检查您的homeassistant密码是否正确或自行验证下方链接是否可以打开您的HomeAssistant，'.PHP_EOL.'链接：';
+	echo '<p><a href="'.$url.'">点击链接检查是否可以正常打开</a></p>';
+
+	die;
+}
+if ($http_code > 500)
+{
+	echo '请检查您的homeassistant运行状态是否正确';
+	die;
+}
+if ($errorCode)
+{
+	echo '超时或其他错误'.curl_error($ch);
+	die;
+}
+curl_close($ch);  
+
+
+#$query_response = @file_get_contents($homeassistantURL."/api/states?api_password=".$homeassistantPASS);
+#if ($query_response === FALSE){
+#	echo 'something error whit your homeassistant'.PHP_EOL;
+#	$error = var_dump($http_response_header);
+#	echo $error[0];
+#	die;
+#}
+$arr = json_decode($query_response);
+$binary_sensor=array();
+$sensor=array();
+$light=array();
+$cover=array();
+$switch=array();
+$fan=array();
+$media_player=array();
+$scripts=array();
+$num = count($arr); 
+for($i=0;$i<$num;++$i){ 
+	if (strstr($arr[$i]->entity_id,"binary_sensor.")){
+		array_push($binary_sensor,$arr[$i]);
+		continue;
+	}
+	if (strstr($arr[$i]->entity_id,"sensor.")&&(strstr($arr[$i]->entity_id,"temperature")||strstr($arr[$i]->entity_id,"humidity")||strstr($arr[$i]->entity_id,"pm25"))){
+		array_push($sensor,$arr[$i]);
+		continue;
+	}
+	if (strstr($arr[$i]->entity_id,"light.")){
+		array_push($light,$arr[$i]);
+		continue;
+	}
+	if (strstr($arr[$i]->entity_id,"cover.")){
+		array_push($cover,$arr[$i]);
+		continue;
+	}
+	if (strstr($arr[$i]->entity_id,"switch.")){
+		array_push($switch,$arr[$i]);
+		continue;
+	}
+	if (strstr($arr[$i]->entity_id,"fan.")){
+		array_push($fan,$arr[$i]);
+		continue;
+	}
+	if (strstr($arr[$i]->entity_id,"media_player.")){
+		array_push($media_player,$arr[$i]);
+		continue;
+	}
+	if (strstr($arr[$i]->entity_id,"script.")){
+		array_push($scripts,$arr[$i]);
+		continue;
+	}
+}
+$hadevice=array();
+$num = count($cover); 
+for($i=0;$i<$num;++$i){ 
+  array_push($hadevice,array("entity_id" => $cover[$i]->entity_id,"friendly_name" => $cover[$i]->attributes->friendly_name));
+}	  
+	
+$num = count($light); 
+for($i=0;$i<$num;++$i){ 
+  array_push($hadevice,array("entity_id" => $light[$i]->entity_id,"friendly_name" => $light[$i]->attributes->friendly_name));
+}
+$num = count($switch); 
+for($i=0;$i<$num;++$i){ 
+  array_push($hadevice,array("entity_id" => $switch[$i]->entity_id,"friendly_name" => $switch[$i]->attributes->friendly_name));
+}
+$num = count($sensor); 
+for($i=0;$i<$num;++$i){ 	
+  array_push($hadevice,array("entity_id" => $sensor[$i]->entity_id,"friendly_name" => $sensor[$i]->attributes->friendly_name));
+}
+$num = count($media_player); 
+for($i=0;$i<$num;++$i){ 	
+  array_push($hadevice,array("entity_id" => $media_player[$i]->entity_id,"friendly_name" => $media_player[$i]->attributes->friendly_name));
+}
+$num = count($scripts); 
+for($i=0;$i<$num;++$i){ 	
+  array_push($hadevice,array("entity_id" => $scripts[$i]->entity_id,"friendly_name" => $scripts[$i]->attributes->friendly_name));
+}
+?>
+
+
 <!doctype html>
 <html>
 <head>
@@ -298,88 +435,11 @@ var vm = new Vue({
       extension: {
                     link: "https://www.baidu.com"
       },
-      Homeassistant_device:
-<?php
-require_once __DIR__.'/homeassistant_conf.php';
-$query_response = file_get_contents(URL."/api/states?api_password=".PASS);
-$arr = json_decode($query_response);
-$binary_sensor=array();
-$sensor=array();
-$light=array();
-$cover=array();
-$switch=array();
-$fan=array();
-$vacuum=array();
-$media_player=array();
-$num = count($arr); 
-for($i=0;$i<$num;++$i){ 
-	if (strstr($arr[$i]->entity_id,"binary_sensor.")){
-		array_push($binary_sensor,$arr[$i]);
-		continue;
-	}
-	if (strstr($arr[$i]->entity_id,"sensor.")&&(strstr($arr[$i]->entity_id,"temperature")||strstr($arr[$i]->entity_id,"humidity")||strstr($arr[$i]->entity_id,"pm25"))){
-		array_push($sensor,$arr[$i]);
-		continue;
-	}
-	if (strstr($arr[$i]->entity_id,"light.")){
-		array_push($light,$arr[$i]);
-		continue;
-	}
-	if (strstr($arr[$i]->entity_id,"cover.")){
-		array_push($cover,$arr[$i]);
-		continue;
-	}
-	if (strstr($arr[$i]->entity_id,"switch.")){
-		array_push($switch,$arr[$i]);
-		continue;
-	}
-	if (strstr($arr[$i]->entity_id,"fan.")){
-		array_push($fan,$arr[$i]);
-		continue;
-	}
-	if (strstr($arr[$i]->entity_id,"vacuum.")){
-		array_push($vacuum,$arr[$i]);
-		continue;
-	}
-	if (strstr($arr[$i]->entity_id,"media_player.")){
-		array_push($media_player,$arr[$i]);
-		continue;
-	}
-}
-$hadevice=array();
-	  
-$num = count($vacuum); 
-for($i=0;$i<$num;++$i){ 
-  array_push($hadevice,array("entity_id" => $vacuum[$i]->entity_id,"friendly_name" => $vacuum[$i]->attributes->friendly_name));
-}		 
-	  
-$num = count($cover); 
-for($i=0;$i<$num;++$i){ 
-  array_push($hadevice,array("entity_id" => $cover[$i]->entity_id,"friendly_name" => $cover[$i]->attributes->friendly_name));
-}	  
-	
-$num = count($light); 
-for($i=0;$i<$num;++$i){ 
-  array_push($hadevice,array("entity_id" => $light[$i]->entity_id,"friendly_name" => $light[$i]->attributes->friendly_name));
-}
-$num = count($switch); 
-for($i=0;$i<$num;++$i){ 
-  array_push($hadevice,array("entity_id" => $switch[$i]->entity_id,"friendly_name" => $switch[$i]->attributes->friendly_name));
-}
-$num = count($sensor); 
-for($i=0;$i<$num;++$i){ 	
-  array_push($hadevice,array("entity_id" => $sensor[$i]->entity_id,"friendly_name" => $sensor[$i]->attributes->friendly_name));
-}
-$num = count($media_player); 
-for($i=0;$i<$num;++$i){ 	
-  array_push($hadevice,array("entity_id" => $media_player[$i]->entity_id,"friendly_name" => $media_player[$i]->attributes->friendly_name));
-}
-echo json_encode($hadevice);
-?>,
+      Homeassistant_device:<?php echo json_encode($hadevice);?>,
       
       
       
-      deviceTypeData:[{"title":"\u7535\u89c6","value":"television"},{"title":"\u706f","value":"light"},{"title":"\u7a7a\u8c03","value":"aircondition"},{"title":"\u7a7a\u6c14\u51c0\u5316\u5668","value":"airpurifier"},{"title":"\u63d2\u5ea7","value":"outlet"},{"title":"\u5f00\u5173","value":"switch"},{"title":"\u626b\u5730\u673a\u5668\u4eba","value":"roboticvacuum"},{"title":"\u7a97\u5e18","value":"curtain"},{"title":"\u52a0\u6e7f\u5668","value":"humidifier"},{"title":"\u98ce\u6247","value":"fan"},{"title":"\u6696\u5976\u5668","value":"bottlewarmer"},{"title":"\u8c46\u6d46\u673a","value":"soymilkmaker"},{"title":"\u7535\u70ed\u6c34\u58f6","value":"kettle"},{"title":"\u996e\u6c34\u673a","value":"watercooler"},{"title":"\u7535\u996d\u7172","value":"cooker"},{"title":"\u70ed\u6c34\u5668","value":"waterheater"},{"title":"\u70e4\u7bb1","value":"oven"},{"title":"\u51c0\u6c34\u5668","value":"waterpurifier"},{"title":"\u51b0\u7bb1","value":"fridge"},{"title":"\u673a\u9876\u76d2","value":"STB"},{"title":"\u4f20\u611f\u5668","value":"sensor"},{"title":"\u6d17\u8863\u673a","value":"washmachine"},{"title":"\u667a\u80fd\u5e8a","value":"smartbed"},{"title":"\u9999\u85b0\u673a","value":"aromamachine"},{"title":"\u7a97","value":"window"}],
+      deviceTypeData:[{"title":"电视","value":"television"},{"title":"\u706f","value":"light"},{"title":"\u7a7a\u8c03","value":"aircondition"},{"title":"\u7a7a\u6c14\u51c0\u5316\u5668","value":"airpurifier"},{"title":"\u63d2\u5ea7","value":"outlet"},{"title":"\u5f00\u5173","value":"switch"},{"title":"\u626b\u5730\u673a\u5668\u4eba","value":"roboticvacuum"},{"title":"\u7a97\u5e18","value":"curtain"},{"title":"\u52a0\u6e7f\u5668","value":"humidifier"},{"title":"\u98ce\u6247","value":"fan"},{"title":"\u6696\u5976\u5668","value":"bottlewarmer"},{"title":"\u8c46\u6d46\u673a","value":"soymilkmaker"},{"title":"\u7535\u70ed\u6c34\u58f6","value":"kettle"},{"title":"\u996e\u6c34\u673a","value":"watercooler"},{"title":"\u7535\u996d\u7172","value":"cooker"},{"title":"\u70ed\u6c34\u5668","value":"waterheater"},{"title":"\u70e4\u7bb1","value":"oven"},{"title":"\u51c0\u6c34\u5668","value":"waterpurifier"},{"title":"\u51b0\u7bb1","value":"fridge"},{"title":"\u673a\u9876\u76d2","value":"STB"},{"title":"\u4f20\u611f\u5668","value":"sensor"},{"title":"\u6d17\u8863\u673a","value":"washmachine"},{"title":"\u667a\u80fd\u5e8a","value":"smartbed"},{"title":"\u9999\u85b0\u673a","value":"aromamachine"},{"title":"\u7a97","value":"window"},{"title":"抽油烟机","value":"kitchenventilator"},{"title":"指纹锁","value":"fingerprintlock"},{"title":"万能遥控器","value":"telecontroller"},{"title":"洗碗机","value":"dishwasher"},{"title":"除湿机","value":"dehumidifier"},{"title":"干衣机","value":"dryer"},{"title":"壁挂炉","value":"wall-hung-boiler"},{"title":"摄像头","value":"camera"},{"title":"路由器","value":"router"},],
       zoneData:["门口","客厅","卧室","客房","主卧","次卧","书房","餐厅","厨房","洗手间","阳台","宠物房","老人房","儿童房","婴儿房","浴室","玄关","一楼","二楼","楼上","楼下","影音室","娱乐室","工作间","杂物间","衣帽间","保姆房","花园"],
       actionsData: [{"title":"\u6253\u5f00","value":"TurnOn"},{"title":"\u5173\u95ed","value":"TurnOff"},{"title":"\u9891\u9053\u5207\u6362","value":"SelectChannel"},{"title":"\u9891\u9053\u589e\u52a0","value":"AdjustUpChannel"},{"title":"\u9891\u9053\u51cf\u5c11","value":"AdjustDownChannel"},{"title":"\u58f0\u97f3\u6309\u7167\u6b65\u957f\u8c03\u5927","value":"AdjustUpVolume"},{"title":"\u58f0\u97f3\u6309\u7167\u6b65\u957f\u8c03\u5c0f","value":"AdjustDownVolume"},{"title":"\u58f0\u97f3\u8c03\u5230\u67d0\u4e2a\u503c","value":"SetVolume"},{"title":"\u8bbe\u7f6e\u9759\u97f3","value":"SetMute"},{"title":"\u53d6\u6d88\u9759\u97f3","value":"CancelMute"},{"title":"\u64ad\u653e","value":"Play"},{"title":"\u6682\u505c","value":"Pause"},{"title":"\u7ee7\u7eed","value":"Continue"},{"title":"\u4e0b\u4e00\u9996\u6216\u4e0b\u4e00\u53f0","value":"Next"},{"title":"\u4e0a\u4e00\u9996\u6216\u4e0b\u4e00\u53f0","value":"Previous"},{"title":"\u8bbe\u7f6e\u4eae\u5ea6","value":"SetBrightness"},{"title":"\u8c03\u5927\u4eae\u5ea6","value":"AdjustUpBrightness"},{"title":"\u8c03\u5c0f\u4eae\u5ea6","value":"AdjustDownBrightness"},{"title":"\u8bbe\u7f6e\u6e29\u5ea6","value":"SetTemperature"},{"title":"\u8c03\u9ad8\u6e29\u5ea6","value":"AdjustUpTemperature"},{"title":"\u8c03\u4f4e\u6e29\u5ea6","value":"AdjustDownTemperature"},{"title":"\u8bbe\u7f6e\u98ce\u901f","value":"SetWindSpeed"},{"title":"\u8c03\u5927\u98ce\u901f","value":"AdjustUpWindSpeed"},{"title":"\u8c03\u5c0f\u98ce\u901f","value":"AdjustDownWindSpeed"},{"title":"\u6a21\u5f0f\u7684\u5207\u6362","value":"SetMode"},{"title":"\u8bbe\u7f6e\u989c\u8272","value":"SetColor"},{"title":"\u6253\u5f00\u529f\u80fd","value":"OpenFunction"},{"title":"\u5173\u95ed\u529f\u80fd","value":"CloseFunction"},{"title":"\u67e5\u8be2\u989c\u8272","value":"QueryColor"},{"title":"\u67e5\u8be2\u7535\u6e90\u5f00\u5173","value":"QueryPowerState"},{"title":"\u67e5\u8be2\u6e29\u5ea6","value":"QueryTemperature"},{"title":"\u67e5\u8be2\u6e7f\u5ea6","value":"QueryHumidity"},{"title":"\u67e5\u8be2\u98ce\u901f","value":"QueryWindSpeed"},{"title":"\u67e5\u8be2\u4eae\u5ea6","value":"QueryBrightness"},{"title":"\u67e5\u8be2\u96fe\u91cf","value":"QueryFog"},{"title":"\u67e5\u8be2\u6a21\u5f0f","value":"QueryMode"},{"title":"\u67e5\u8be2pm2.5\u542b\u91cf","value":"QueryPM25"},{"title":"\u67e5\u8be2\u65b9\u5411","value":"QueryDirection"},{"title":"\u67e5\u8be2\u89d2\u5ea6","value":"QueryAngle"}],
   	  propertiesData:[{"title":"powerstate","name":"\u7535\u6e90\u72b6\u6001","value":"off"},{"title":"color","name":"\u989c\u8272","value":"Red"},{"title":"temperature","name":"\u6e29\u5ea6","value":"1"},{"title":"windspeed","name":"\u98ce\u901f","value":"1"},{"title":"brightness","name":"\u4eae\u5ea6","value":"1"},{"title":"fog","name":"\u96fe\u91cf","value":"1"},{"title":"humidity","name":"\u6e7f\u5ea6","value":"1"},{"title":"pm2.5","name":"pm2.5","value":"1"},{"title":"channel","name":"\u7535\u89c6\u9891\u9053","value":"\u4e1c\u65b9\u536b\u89c6"},{"title":"number","name":"\u7535\u89c6\u9891\u9053\u53f7","value":"1"},{"title":"direction","name":"\u65b9\u5411","value":"left"},{"title":"angle","name":"\u89d2\u5ea6","value":"1"},{"title":"anion","name":"\u8d1f\u79bb\u5b50\u529f\u80fd","value":"off"},{"title":"effluent","name":"\u51fa\u6c34\u529f\u80fd","value":"off"},{"title":"mode","name":"\u6a21\u5f0f","value":"\u53c2\u8003mode auto"},{"title":"lefttime","name":"\u5269\u4f59\u65f6\u95f4","value":"1"},{"title":"remotestatus","name":"\u8bbe\u5907\u8fdc\u7a0b\u72b6\u6001","value":"off"}],
@@ -466,7 +526,9 @@ echo json_encode($hadevice);
             {
                 deviceId:obj.deviceId,
                 deviceName:obj.deviceName,
-                jsonData:jsonData
+		jsonData:jsonData,
+		virtual :"0",
+		states  :""
                 
             },
             {emulateJSON:true}
