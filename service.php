@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__.'/server.php';
-#$db = new PDO($dsn, $user, $pwd);
+$db = new PDO($dsn, $user, $pwd);
 
 
 
