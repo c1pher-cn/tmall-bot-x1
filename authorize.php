@@ -2,8 +2,8 @@
 session_start();
 require_once __DIR__.'/server.php';
 
-$request = OAuth2_Request::createFromGlobals();
-$response = new OAuth2_Response();
+$request = OAuth2\Request::createFromGlobals();
+$response = new OAuth2\Response();
 
 // validate the authorize request
 $m=$request->query['redirect_uri']; 
