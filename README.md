@@ -20,7 +20,7 @@ https://github.com/bshaffer/oauth2-server-php/blob/php5.2-develop/README.md
     
     其他类型的设备因为我自己没有所以无法调试，有需求可以带着设备id跟我反馈。
     
-    目前支持温湿度传感器的查询(要求传感器id里必须包含 temperature、humidity的关键字)，其他传感器天猫官方还未支持。
+  
    	
 其他设备类型可能我没有的请提交设备id给我
    
