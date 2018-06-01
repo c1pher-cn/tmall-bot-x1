@@ -417,7 +417,7 @@ var vm = new Vue({
   el: '#app',
   data: {
       notice:{
-      	title:'天猫精灵设备管理_1.0   By qebabe',
+      	title:'天猫精灵设备管理',
         nocice:"",
         
       },
@@ -567,8 +567,7 @@ var vm = new Vue({
             console.log(res.data);
               if(res.data.code=="ok"){
               	//$.toast(res.data.Msg);
-                 that.notice=res.data.data;
-                  
+                 that.notice=res.data.data; 
               }else{
               	$.toast(res.data.Msg, "forbidden");
               }

@@ -96,9 +96,17 @@ elseif ($v=="del"){
 
 elseif ($v=="getNotice"){//到我的服务器获取版本更新完善的消息，不会收集信息请放心使用！
 
-
-    $url = "http://qebapp.applinzi.com/device/notice.php?version=2";
-	getdata($url);
+	$str='{code: "ok",Msg: "获取成功",data: 
+		{
+			title: "天猫精灵设备管理",
+			notice: "建议反馈请微博联系",
+			link: "https://weibo.com/u/1147593092",
+			updata: true,
+			updataLink: "https://bbs.hassbian.com/thread-2982-1-1.html",
+			logo: [
+		{img: "https://bbs.hassbian.com/static/image/common/logo.png",link: "https://bbs.hassbian.com/thread-2982-1-1.html"},
+		{img: "https://home-assistant.io/demo/favicon-192x192.png",link: "javascript:;"}]}}';
+	echo $str;
 
 }
 
@@ -108,17 +116,27 @@ elseif ($v=="getNotice"){//到我的服务器获取版本更新完善的消息�
 
 
 function getdata($url){
+
     $curl = curl_init();
     //设置抓取的url
     curl_setopt($curl, CURLOPT_URL, $url);
     //设置头文件的信息作为数据流输出
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl, CURLOPT_TIMEOUT, 2); //设置整个网络请求最长执行时间为2秒
+    curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 1); //设置连接目标服务器1秒无响应时判断为超时
     //curl_setopt($curl, CURLOPT_HEADER, 1);
     //设置获取的信息以文件流的形式返回，而不是直接输出。
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
     //执行命令
     $data = curl_exec($curl);
+    $http_code = curl_getinfo($curl,CURLINFO_HTTP_CODE);
+    $errorCode =curl_errno($curl);
     //关闭URL请求
     curl_close($curl);
     //显示获得的数据
-    echo $data;
+    echo $http_code;
+    echo $errorCode;
+    return $data;
 }
