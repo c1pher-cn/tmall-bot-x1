@@ -68,6 +68,7 @@ $sensor=array();
 $light=array();
 $cover=array();
 $switch=array();
+$vacuum=array();
 $fan=array();
 $media_player=array();
 $scripts=array();
@@ -92,6 +93,10 @@ for($i=0;$i<$num;++$i){
 	if (strstr($arr[$i]->entity_id,"switch.")){
 		array_push($switch,$arr[$i]);
 		continue;
+	}
+	if (strstr($arr[$i]->entity_id,"vacuum.")){
+		array_push($vacuum,$arr[$i]);
+		continue;			
 	}
 	if (strstr($arr[$i]->entity_id,"fan.")){
 		array_push($fan,$arr[$i]);
@@ -119,6 +124,10 @@ for($i=0;$i<$num;++$i){
 $num = count($switch); 
 for($i=0;$i<$num;++$i){ 
   array_push($hadevice,array("entity_id" => $switch[$i]->entity_id,"friendly_name" => $switch[$i]->attributes->friendly_name));
+}
+$num = count($vacuum); 
+for($i=0;$i<$num;++$i){ 
+	  array_push($hadevice,array("entity_id" => $vacuum[$i]->entity_id,"friendly_name" => $vacuum[$i]->attributes->friendly_name));
 }
 $num = count($sensor); 
 for($i=0;$i<$num;++$i){ 	
