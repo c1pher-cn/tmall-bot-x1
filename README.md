@@ -30,3 +30,6 @@ https://github.com/bshaffer/oauth2-server-php/blob/php5.2-develop/README.md
 部署配置方法详见 
 	我的博客:            https://weibo.com/ttarticle/p/show?id=2309404195482120392395   或 
 	瀚思彼岸技术论坛:     https://bbs.hassbian.com/thread-1862-1-1.html
+
+
+2018-06-01 @HZ
