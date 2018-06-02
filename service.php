@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__.'/server.php';
+session_start();
 if(empty($_SESSION['userinfo'])){
         $_SESSION['userurl'] = $_SERVER['REQUEST_URI'];
         echo "{\"code\" : \"v\",\"Msg\":\"v\"}";
