@@ -98,11 +98,7 @@ for($i=0;$i<$num;++$i){
 	}
 	if (strstr($arr[$i]->entity_id,"vacuum.")){
 		array_push($vacuum,$arr[$i]);
-<<<<<<< .merge_file_wDPgZh
-		continue;			
-=======
 		continue;
->>>>>>> .merge_file_04wYFe
 	}
 	if (strstr($arr[$i]->entity_id,"fan.")){
 		array_push($fan,$arr[$i]);
