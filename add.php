@@ -98,7 +98,11 @@ for($i=0;$i<$num;++$i){
 	}
 	if (strstr($arr[$i]->entity_id,"vacuum.")){
 		array_push($vacuum,$arr[$i]);
+<<<<<<< .merge_file_wDPgZh
 		continue;			
+=======
+		continue;
+>>>>>>> .merge_file_04wYFe
 	}
 	if (strstr($arr[$i]->entity_id,"fan.")){
 		array_push($fan,$arr[$i]);
@@ -129,7 +133,11 @@ for($i=0;$i<$num;++$i){
 }
 $num = count($vacuum); 
 for($i=0;$i<$num;++$i){ 
+<<<<<<< .merge_file_wDPgZh
 	  array_push($hadevice,array("entity_id" => $vacuum[$i]->entity_id,"friendly_name" => $vacuum[$i]->attributes->friendly_name));
+=======
+  array_push($hadevice,array("entity_id" => $vacuum[$i]->entity_id,"friendly_name" => $vacuum[$i]->attributes->friendly_name));
+>>>>>>> .merge_file_04wYFe
 }
 $num = count($sensor); 
 for($i=0;$i<$num;++$i){ 	

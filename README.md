@@ -11,11 +11,12 @@ https://github.com/bshaffer/oauth2-server-php/blob/php5.2-develop/README.md
    
    2.php+mysql或者相似的环境 
    
+   
 不足点：
 
     目前未完成鉴权，完成授权之后后续与天猫开放平台之间的通讯并未验证token的合法性。
     
-    目前只支持homeassistant里light、switch、media_player、fan、cover类型设备的控制，和这四个设备电源状态的查看。
+    目前只支持homeassistant里light、switch、media_player、fan、cover、vacuum、script类型设备的控制，和这四个设备电源状态的查看。
     
     其他类型的设备因为我自己没有所以无法调试，有需求可以带着设备id跟我反馈。
     
