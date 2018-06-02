@@ -1,5 +1,7 @@
 <?php
 include_once( 'server.php' );
+session_start();
+
 if(empty($_SESSION)||empty($_SESSION['userinfo']))
 {
         $_SESSION['userurl'] = $_SERVER['REQUEST_URI'];
