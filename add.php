@@ -129,11 +129,7 @@ for($i=0;$i<$num;++$i){
 }
 $num = count($vacuum); 
 for($i=0;$i<$num;++$i){ 
-<<<<<<< .merge_file_wDPgZh
-	  array_push($hadevice,array("entity_id" => $vacuum[$i]->entity_id,"friendly_name" => $vacuum[$i]->attributes->friendly_name));
-=======
   array_push($hadevice,array("entity_id" => $vacuum[$i]->entity_id,"friendly_name" => $vacuum[$i]->attributes->friendly_name));
->>>>>>> .merge_file_04wYFe
 }
 $num = count($sensor); 
 for($i=0;$i<$num;++$i){ 	
