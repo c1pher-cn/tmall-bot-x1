@@ -62,7 +62,7 @@ error_log('--------------------');
 
 $arr = json_decode($query_response);
 $num = count($arr);
-error_log($arr.'--'.$num);
+
 
 $deviveList=array();
 $deviceTypeList=array();
