@@ -569,7 +569,7 @@ function  Device_control($obj)
 			);
 		}
 		$post_string = json_encode($post_array);
-		#error_log($post_string);
+		error_log($post_string);
     		$opts = array(
 			'http' => array(
 				 'method' => "POST",
@@ -579,7 +579,7 @@ function  Device_control($obj)
 			);
 		$context = stream_context_create($opts);
 		$http_post = $URL."/api/services/".$device_ha."/".$action."?api_password=".$PASS;
-		#error_log($http_post);
+		error_log($http_post);
 		$pdt_response = file_get_contents($http_post, false, $context);
 		$response = new Response();
 		$response->put_control_response(True,$response_name,$deviceId,"","");	
