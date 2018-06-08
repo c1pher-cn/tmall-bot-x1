@@ -363,6 +363,9 @@ function  Device_control($obj)
 	case 'script':
 		$device_ha='script';
 		break;
+	case 'climate':
+		$device_ha='climate';
+		break;
 	default:
 		break;
 	}
@@ -443,11 +446,22 @@ function  Device_control($obj)
 		$action='set_color';
 		break;
 	case 'SetMode':
-	#case 'SetMute':
-		$action='volume_mute';
+		$mode = $obj->payload->value;
+		if ($mode =='silent')
+		{
+			$action='volume_mute';
+		}elseif ($mode=='heat' || $mode=='cold' || $mode=='ventilate'  || $mode=='auto' || $mode=='energy')
+		{
+			$action='set_operation_mode';
+		}
 		break;
 	case 'CancelMode':
-	#case 'CancelMute':
+		$action='volume_mute';
+		break;
+	case 'SetMute':
+		$action='volume_mute';
+		break;
+	case 'CancelMute':
 		$action='volume_mute';
 		break;
 	case 'Next':
@@ -459,6 +473,15 @@ function  Device_control($obj)
 	case 'SelectChannel':
 		$action='select_source';
 		break;
+	#
+	case 'SetTemperature':
+		$action='set_temperature';
+		break;
+	case 'SetWindSpeed':
+		$action='set_fan_mode';
+		break;
+
+
 	default:
 		break;
 	}
@@ -468,7 +491,7 @@ function  Device_control($obj)
 		$response->put_control_response(False,$response_name,$deviceId,"not support","action or device not support,name:".$obj->header->name." device:".substr($deviceId,0,stripos($deviceId,".")));
 		return $response;
 	}
-	if($obj->header->name == "SetBrightness" || $obj->header->name == "SetVolume" || $obj->header->name == "SelectChannel" || $obj->header->name == "SetColor" || $obj->header->name == "SetMode" || $obj->header->name == "CancelMode")
+	if($obj->header->name == "SetBrightness" || $obj->header->name == "SetVolume" || $obj->header->name == "SelectChannel" || $obj->header->name == "SetColor" || $obj->header->name == "SetMode" || $obj->header->name == "CancelMode" || $obj->header->name == "SetTemperature" || $obj->header->name == "SetWindSpeed")
 	{
 		$value = $obj->payload->value;
 		if ($action=="volume_mute")
@@ -492,12 +515,12 @@ function  Device_control($obj)
 			);
 		}
 		if ($action=="select_source")
-		{	
-			$post_array = array (
-				"entity_id" => $deviceId,
-				"source" => $value
-			);
-		}
+ 		{	
+ 			$post_array = array (
+ 				"entity_id" => $deviceId,
+ 				"source" => $value
+ 			);
+ 		}
 		if ($action=="set_bright")
 		{	
 			$action="turn_on";
@@ -568,8 +591,61 @@ function  Device_control($obj)
 				"rgb_color" => array($a,$b,$c)
 			);
 		}
+		if ($action=="set_operation_mode")
+		{
+			if ($mode=='heat')
+			{
+				$value="heat"
+			}
+			elseif($mode=='cold')
+			{
+				$value="cool"
+			}
+			elseif($mode=='ventilate' || $mode=='auto')
+			{
+				$value="fan_only"
+			}	
+			else($mode=='dehumidification')
+			{
+				$value="dry"
+			}	
+			$post_array = array (
+ 				"entity_id" => $deviceId,
+ 				"operation_mode" => $value
+ 			);
+ 		}
+		if ($action=="set_temperature")
+ 		{	
+ 			$post_array = array (
+ 				"entity_id" => $deviceId,
+ 				"temperature" => $value
+ 			);
+ 		}
+		if ($action=="set_fan_mode")
+		{
+			if($value=="max" || $value=="3")	
+			{
+				$value="High";
+			}
+			elseif($value=="min" || $value=="1")	
+			{
+				$value="Low";
+			}
+			elseif($value=="2")
+			{
+				value="Middle"
+			}	
+			else
+			{
+				$value="High";
+			}
+			$post_array = array (
+ 				"entity_id" => $deviceId,
+ 				"fan_mode" => $value
+ 			);
+ 		}
 		$post_string = json_encode($post_array);
-		error_log($post_string);
+		#error_log($post_string);
     		$opts = array(
 			'http' => array(
 				 'method' => "POST",
@@ -579,7 +655,7 @@ function  Device_control($obj)
 			);
 		$context = stream_context_create($opts);
 		$http_post = $URL."/api/services/".$device_ha."/".$action."?api_password=".$PASS;
-		error_log($http_post);
+		#error_log($http_post);
 		$pdt_response = file_get_contents($http_post, false, $context);
 		$response = new Response();
 		$response->put_control_response(True,$response_name,$deviceId,"","");	
