@@ -74,6 +74,7 @@ $vacuum=array();
 $fan=array();
 $media_player=array();
 $scripts=array();
+$climate=array();
 $num = count($arr); 
 for($i=0;$i<$num;++$i){ 
 	if (strstr($arr[$i]->entity_id,"binary_sensor.")){
@@ -112,6 +113,10 @@ for($i=0;$i<$num;++$i){
 		array_push($scripts,$arr[$i]);
 		continue;
 	}
+	if (strstr($arr[$i]->entity_id,"climate.")){
+		array_push($climate,$arr[$i]);
+		continue;
+	}
 }
 $hadevice=array();
 $num = count($cover); 
@@ -142,6 +147,10 @@ for($i=0;$i<$num;++$i){
 $num = count($scripts); 
 for($i=0;$i<$num;++$i){ 	
   array_push($hadevice,array("entity_id" => $scripts[$i]->entity_id,"friendly_name" => $scripts[$i]->attributes->friendly_name));
+}
+$num = count($climate); 
+for($i=0;$i<$num;++$i){ 	
+  array_push($hadevice,array("entity_id" => $climate[$i]->entity_id,"friendly_name" => $climate[$i]->attributes->friendly_name));
 }
 ?>
 
