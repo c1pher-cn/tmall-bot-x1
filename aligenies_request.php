@@ -411,6 +411,11 @@ function  Device_control($obj)
 		{
 			$action='turn_on';
 		}
+		elseif ($device_ha=='climate')
+                {
+                        $mode = $obj->payload->value;
+                        $action='set_operation_mode';
+                }
 		break;
 	case 'TurnOff':
 		$action='turn_off';
@@ -423,6 +428,11 @@ function  Device_control($obj)
 			#$action='turn_off';
 			$action='return_to_base';
 		}
+		elseif ($device_ha=='climate')
+                {
+                        $mode = $obj->payload->value;
+                        $action='set_operation_mode';
+                }
 		break;
 	case 'SetBrightness':
 		$action='set_bright';
@@ -450,7 +460,7 @@ function  Device_control($obj)
 		if ($mode =='silent')
 		{
 			$action='volume_mute';
-		}elseif ($mode=='heat' || $mode=='cold' || $mode=='ventilate'  || $mode=='auto' || $mode=='energy')
+		}elseif ($mode=='heat' || $mode=='cold' || $mode=='ventilate'  || $mode=='auto' || $mode=='energy' || $mode=='dehumidification')
 		{
 			$action='set_operation_mode';
 		}
@@ -491,7 +501,7 @@ function  Device_control($obj)
 		$response->put_control_response(False,$response_name,$deviceId,"not support","action or device not support,name:".$obj->header->name." device:".substr($deviceId,0,stripos($deviceId,".")));
 		return $response;
 	}
-	if($obj->header->name == "SetBrightness" || $obj->header->name == "SetVolume" || $obj->header->name == "SelectChannel" || $obj->header->name == "SetColor" || $obj->header->name == "SetMode" || $obj->header->name == "CancelMode" || $obj->header->name == "SetTemperature" || $obj->header->name == "SetWindSpeed")
+	if($obj->header->name == "SetBrightness" || $obj->header->name == "SetVolume" || $obj->header->name == "SelectChannel" || $obj->header->name == "SetColor" || $obj->header->name == "SetMode" || $obj->header->name == "CancelMode" || $obj->header->name == "SetTemperature" || $obj->header->name == "SetWindSpeed" || ($obj->header->name=="TurnOn"&$action=="set_operation_mode") || ( $obj->header->name=="TurnOff"&$action=="set_operation_mode"))
 	{
 		$value = $obj->payload->value;
 		if ($action=="volume_mute")
@@ -605,10 +615,18 @@ function  Device_control($obj)
 			{
 				$value="fan_only"
 			}	
-			else($mode=='dehumidification')
-			{
-				$value="dry"
-			}	
+			elseif($mode=='dehumidification')
+                        {
+                                $value="dry";
+                        }
+                        elseif($mode=='off')
+                        {
+                                $value="off";
+                        }
+			else
+                        {
+                                $value="cool";
+                        }
 			$post_array = array (
  				"entity_id" => $deviceId,
  				"operation_mode" => $value
