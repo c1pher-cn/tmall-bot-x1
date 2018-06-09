@@ -605,15 +605,15 @@ function  Device_control($obj)
 		{
 			if ($mode=='heat')
 			{
-				$value="heat"
+				$value="heat";
 			}
 			elseif($mode=='cold')
 			{
-				$value="cool"
+				$value="cool";
 			}
 			elseif($mode=='ventilate' || $mode=='auto')
 			{
-				$value="fan_only"
+				$value="fan_only";
 			}	
 			elseif($mode=='dehumidification')
                         {
@@ -651,7 +651,7 @@ function  Device_control($obj)
 			}
 			elseif($value=="2")
 			{
-				value="Middle"
+				$value="Middle";
 			}	
 			else
 			{
