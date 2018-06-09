@@ -459,7 +459,7 @@ function  Device_control($obj)
 		if ($mode =='silent')
 		{
 			$action='volume_mute';
-		}elseif ($mode=='heat' || $mode=='cold' || $mode=='ventilate'  || $mode=='auto' || $mode=='energy')
+		}elseif ($mode=='heat' || $mode=='cold' || $mode=='ventilate'  || $mode=='auto' || $mode=='energy' || $mode=='dehumidification')
 		{
 			$action='set_operation_mode';
 		}
