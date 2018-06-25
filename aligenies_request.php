@@ -533,9 +533,20 @@ function  Device_control($obj)
 		if ($action=="set_bright")
 		{	
 			$action="turn_on";
+			switch(strtolower($value))
+			{
+				case 'min':
+					$brightness = 0;
+					break;
+				case 'max':
+					$brightness = 100;
+					break;
+				default:
+					$brightness = (int)$value;
+			}
 			$post_array = array (
 				"entity_id" => $deviceId,
-				"brightness_pct" => (int)$value
+				"brightness_pct" => $brightness
 			);
 		}
 		if ($action=="set_color")
