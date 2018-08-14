@@ -97,17 +97,17 @@ elseif ($v=="del"){
 
 elseif ($v=="getNotice"){//到我的服务器获取版本更新完善的消息，不会收集信息请放心使用！
 
-	$str='{code: "ok",Msg: "获取成功",data: 
+	echo "{\"code\": \"ok\",\"Msg\": \"获取成功\",\"data\": 
 		{
-			title: "天猫精灵设备管理",
-			notice: "建议反馈请微博联系",
-			link: "https://weibo.com/u/1147593092",
-			updata: true,
-			updataLink: "https://bbs.hassbian.com/thread-2982-1-1.html",
-			logo: [
-		{img: "https://bbs.hassbian.com/static/image/common/logo.png",link: "https://bbs.hassbian.com/thread-2982-1-1.html"},
-		{img: "https://home-assistant.io/demo/favicon-192x192.png",link: "javascript:;"}]}}';
-	echo $str;
+			\"title\": \"天猫精灵设备管理\",
+			\"notice\": \"建议反馈请微博联系\",
+			\"link\": \"https://weibo.com/u/1147593092\",
+			\"updata\": true,
+			\"updataLink\": \"https://bbs.hassbian.com/thread-2982-1-1.html\",
+			\"logo\": [
+		{\"img\": \"https://bbs.hassbian.com/static/image/common/logo.png\",\"link\": \"https://bbs.hassbian.com/thread-2982-1-1.html\"},
+		{\"img\": \"https://home-assistant.io/demo/favicon-192x192.png\",\"link\": \"javascript:;\"}]}}';
+	
 
 }
 
