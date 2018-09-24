@@ -140,6 +140,10 @@ $num = count($sensor);
 for($i=0;$i<$num;++$i){ 	
   array_push($hadevice,array("entity_id" => $sensor[$i]->entity_id,"friendly_name" => $sensor[$i]->attributes->friendly_name));
 }
+$num = count($fan); 
+for($i=0;$i<$num;++$i){ 	
+  array_push($hadevice,array("entity_id" => $fan[$i]->entity_id,"friendly_name" => $fan[$i]->attributes->friendly_name));
+}
 $num = count($media_player); 
 for($i=0;$i<$num;++$i){ 	
   array_push($hadevice,array("entity_id" => $media_player[$i]->entity_id,"friendly_name" => $media_player[$i]->attributes->friendly_name));
