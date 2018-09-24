@@ -433,6 +433,9 @@ function  Device_control($obj)
                         $action='set_operation_mode';
                 }
 		break;
+	case 'SetPosition':
+		$action='set_cover_position';
+		break;
 	case 'SetBrightness':
 		$action='set_bright';
 		break;
@@ -500,7 +503,7 @@ function  Device_control($obj)
 		$response->put_control_response(False,$response_name,$deviceId,"not support","action or device not support,name:".$obj->header->name." device:".substr($deviceId,0,stripos($deviceId,".")));
 		return $response;
 	}
-	if($obj->header->name == "SetBrightness" || $obj->header->name == "SetVolume" || $obj->header->name == "SelectChannel" || $obj->header->name == "SetColor" || $obj->header->name == "SetMode" || $obj->header->name == "CancelMode" || $obj->header->name == "SetTemperature" || $obj->header->name == "SetWindSpeed" || ($obj->header->name=="TurnOn"&$action=="set_operation_mode") || ( $obj->header->name=="TurnOff"&$action=="set_operation_mode"))
+	if( $obj->header->name == "SetPosition" || $obj->header->name == "SetBrightness" || $obj->header->name == "SetVolume" || $obj->header->name == "SelectChannel" || $obj->header->name == "SetColor" || $obj->header->name == "SetMode" || $obj->header->name == "CancelMode" || $obj->header->name == "SetTemperature" || $obj->header->name == "SetWindSpeed" || ($obj->header->name=="TurnOn"&$action=="set_operation_mode") || ( $obj->header->name=="TurnOff"&$action=="set_operation_mode"))
 	{
 		$value = $obj->payload->value;
 		if ($action=="volume_mute")
@@ -530,13 +533,20 @@ function  Device_control($obj)
  				"source" => $value
  			);
  		}
+		if ($action=="set_cover_position")
+ 		{	
+ 			$post_array = array (
+ 				"entity_id" => $deviceId,
+ 				"position" => $value
+ 			);
+ 		}
 		if ($action=="set_bright")
 		{	
 			$action="turn_on";
 			switch(strtolower($value))
 			{
 				case 'min':
-					$brightness = 0;
+					$brightness = 1;
 					break;
 				case 'max':
 					$brightness = 100;
