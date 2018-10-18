@@ -693,7 +693,13 @@ function  Device_control($obj)
 		$context = stream_context_create($opts);
 		$http_post = $URL."/api/services/".$device_ha."/".$action."?api_password=".$PASS;
 		#error_log($http_post);
-		$pdt_response = file_get_contents($http_post, false, $context);
+		try{
+			$pdt_response = file_get_contents($http_post, false, $context);
+		}catch (Exception $e) {
+        		$response = new Response();
+			$response->put_control_response(False,$response_name,$deviceId,"not support","action or device not support,name:".$obj->header->name." device:".substr($deviceId,0,stripos($deviceId,".")));
+			return $response;
+    		}
 		$response = new Response();
 		$response->put_control_response(True,$response_name,$deviceId,"","");	
 		return $response;
@@ -714,7 +720,13 @@ function  Device_control($obj)
 		$context = stream_context_create($opts);
 		$http_post = $URL."/api/services/".$device_ha."/".$action."?api_password=".$PASS;
 		error_log($http_post);
-		$pdt_response = file_get_contents($http_post, false, $context);
+		try{
+			$pdt_response = file_get_contents($http_post, false, $context);
+		}catch (Exception $e) {
+        		$response = new Response();
+			$response->put_control_response(False,$response_name,$deviceId,"not support","action or device not support,name:".$obj->header->name." device:".substr($deviceId,0,stripos($deviceId,".")));
+			return $response;
+    		}
 		$response = new Response();
 		$response->put_control_response(True,$response_name,$deviceId,"","");	
 		return $response;
