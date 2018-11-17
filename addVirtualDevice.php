@@ -26,6 +26,9 @@ $email = $information['email'];
 $url = $homeassistantURL."/api/states?api_password=".$homeassistantPASS;
 $ch = curl_init();
 // set url
+curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+"Content-Type: application/json\r\n"."Authorization: Bearer ".$homeassistantPASS."\r\n"
+));
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_TIMEOUT, 5); //设置整个网络请求最长执行时间为2秒
