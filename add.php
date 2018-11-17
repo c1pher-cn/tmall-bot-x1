@@ -463,10 +463,215 @@ var vm = new Vue({
       
       
       
-      deviceTypeData:[{"title":"电视","value":"television"},{"title":"\u706f","value":"light"},{"title":"\u7a7a\u8c03","value":"aircondition"},{"title":"\u7a7a\u6c14\u51c0\u5316\u5668","value":"airpurifier"},{"title":"\u63d2\u5ea7","value":"outlet"},{"title":"\u5f00\u5173","value":"switch"},{"title":"\u626b\u5730\u673a\u5668\u4eba","value":"roboticvacuum"},{"title":"\u7a97\u5e18","value":"curtain"},{"title":"\u52a0\u6e7f\u5668","value":"humidifier"},{"title":"\u98ce\u6247","value":"fan"},{"title":"\u6696\u5976\u5668","value":"bottlewarmer"},{"title":"\u8c46\u6d46\u673a","value":"soymilkmaker"},{"title":"\u7535\u70ed\u6c34\u58f6","value":"kettle"},{"title":"\u996e\u6c34\u673a","value":"watercooler"},{"title":"\u7535\u996d\u7172","value":"cooker"},{"title":"\u70ed\u6c34\u5668","value":"waterheater"},{"title":"\u70e4\u7bb1","value":"oven"},{"title":"\u51c0\u6c34\u5668","value":"waterpurifier"},{"title":"\u51b0\u7bb1","value":"fridge"},{"title":"\u673a\u9876\u76d2","value":"STB"},{"title":"\u4f20\u611f\u5668","value":"sensor"},{"title":"\u6d17\u8863\u673a","value":"washmachine"},{"title":"\u667a\u80fd\u5e8a","value":"smartbed"},{"title":"\u9999\u85b0\u673a","value":"aromamachine"},{"title":"\u7a97","value":"window"},{"title":"抽油烟机","value":"kitchenventilator"},{"title":"指纹锁","value":"fingerprintlock"},{"title":"万能遥控器","value":"telecontroller"},{"title":"洗碗机","value":"dishwasher"},{"title":"除湿机","value":"dehumidifier"},{"title":"干衣机","value":"dryer"},{"title":"壁挂炉","value":"wall-hung-boiler"},{"title":"摄像头","value":"camera"},{"title":"路由器","value":"router"},],
-      zoneData:["门口","客厅","卧室","客房","主卧","次卧","书房","餐厅","厨房","洗手间","阳台","宠物房","老人房","儿童房","婴儿房","浴室","玄关","一楼","二楼","楼上","楼下","影音室","娱乐室","工作间","杂物间","衣帽间","保姆房","花园"],
+     deviceTypeData: [
+    {
+      title: "电视", 
+      value: "television"
+    }, 
+    {
+      title: "灯", 
+      value: "light"
+    }, 
+    {
+      title: "空调", 
+      value: "aircondition"
+    }, 
+    {
+      title: "空气净化器", 
+      value: "airpurifier"
+    }, 
+    {
+      title: "插座", 
+      value: "outlet"
+    }, 
+    {
+      title: "开关", 
+      value: "switch"
+    }, 
+    {
+      title: "扫地机器人", 
+      value: "roboticvacuum"
+    }, 
+    {
+      title: "窗帘", 
+      value: "curtain"
+    }, 
+    {
+      title: "加湿器", 
+      value: "humidifier"
+    }, 
+    {
+      title: "风扇", 
+      value: "fan"
+    }, 
+    {
+      title: "暖奶器", 
+      value: "bottlewarmer"
+    }, 
+    {
+      title: "豆浆机", 
+      value: "soymilkmaker"
+    }, 
+    {
+      title: "电热水壶", 
+      value: "kettle"
+    }, 
+    {
+      title: "饮水机", 
+      value: "watercooler"
+    }, 
+    {
+      title: "电饭煲", 
+      value: "cooker"
+    }, 
+    {
+      title: "热水器", 
+      value: "waterheater"
+    }, 
+    {
+      title: "烤箱", 
+      value: "oven"
+    }, 
+    {
+      title: "净水器", 
+      value: "waterpurifier"
+    }, 
+    {
+      title: "冰箱", 
+      value: "fridge"
+    }, 
+    {
+      title: "机顶盒", 
+      value: "STB"
+    }, 
+    {
+      title: "传感器", 
+      value: "sensor"
+    }, 
+    {
+      title: "洗衣机", 
+      value: "washmachine"
+    }, 
+    {
+      title: "智能床", 
+      value: "smartbed"
+    }, 
+    {
+      title: "香薰机", 
+      value: "aromamachine"
+    }, 
+    {
+      title: "窗", 
+      value: "window"
+    }, 
+    {
+      title: "抽油烟机", 
+      value: "kitchenventilator"
+    }, 
+    {
+      title: "指纹锁", 
+      value: "fingerprintlock"
+    }, 
+    {
+      title: "万能遥控器", 
+      value: "telecontroller"
+    }, 
+    {
+      title: "洗碗机", 
+      value: "dishwasher"
+    }, 
+    {
+      title: "除湿机", 
+      value: "dehumidifier"
+    }, 
+    {
+      title: "干衣机", 
+      value: "dryer"
+    }, 
+    {
+      title: "壁挂炉", 
+      value: "wall-hung-boiler"
+    }, 
+    {
+      title: "摄像头", 
+      value: "camera"
+    }, 
+    {
+      title: "路由器", 
+      value: "router"
+    },
+    {
+      title: "微波炉", 
+      value: "microwaveoven"
+    },
+    {
+      title: "取暖器", 
+      value: "heater"
+    },
+    {
+      title: "驱蚊器", 
+      value: "mosquito-dispeller"
+    },
+    {
+      title: "跑步机", 
+      value: "treadmill"
+    },
+    {
+      title: "智能门控(门锁)", 
+      value: "smart-gating"
+    },
+    {
+      title: "智能手环", 
+      value: "smart-band"
+    },
+    {
+      title: "晾衣架", 
+      value: "hanger"
+    }
+  ],
+      zoneData: [
+ 	"门口",
+	"客厅",
+	"卧室",
+	"客房",
+	"主卧",
+	"次卧",
+	"书房",
+	"餐厅",
+	"厨房",
+	"洗手间",
+	"浴室",
+	"阳台",
+	"宠物房",
+	"老人房",
+	"儿童房",
+	"婴儿房",
+	"保姆房",
+	"玄关",
+	"一楼",
+	"二楼",
+	"三楼",
+	"四楼",
+	"楼梯",
+	"走廊",
+	"过道",
+	"楼上",
+	"楼下",
+	"影音室",
+	"娱乐室",
+	"工作间",
+	"杂物间",
+	"衣帽间",
+	"吧台",
+	"花园",
+	"温室",
+	"车库",
+	"休息室",
+	"办公室",
+	"起居室"
+      ],
       actionsData: [{"title":"\u6253\u5f00","value":"TurnOn"},{"title":"\u5173\u95ed","value":"TurnOff"},{"title":"\u9891\u9053\u5207\u6362","value":"SelectChannel"},{"title":"\u9891\u9053\u589e\u52a0","value":"AdjustUpChannel"},{"title":"\u9891\u9053\u51cf\u5c11","value":"AdjustDownChannel"},{"title":"\u58f0\u97f3\u6309\u7167\u6b65\u957f\u8c03\u5927","value":"AdjustUpVolume"},{"title":"\u58f0\u97f3\u6309\u7167\u6b65\u957f\u8c03\u5c0f","value":"AdjustDownVolume"},{"title":"\u58f0\u97f3\u8c03\u5230\u67d0\u4e2a\u503c","value":"SetVolume"},{"title":"\u8bbe\u7f6e\u9759\u97f3","value":"SetMute"},{"title":"\u53d6\u6d88\u9759\u97f3","value":"CancelMute"},{"title":"\u64ad\u653e","value":"Play"},{"title":"\u6682\u505c","value":"Pause"},{"title":"\u7ee7\u7eed","value":"Continue"},{"title":"\u4e0b\u4e00\u9996\u6216\u4e0b\u4e00\u53f0","value":"Next"},{"title":"\u4e0a\u4e00\u9996\u6216\u4e0a\u4e00\u53f0","value":"Previous"},{"title":"\u8bbe\u7f6e\u4eae\u5ea6","value":"SetBrightness"},{"title":"\u8c03\u5927\u4eae\u5ea6","value":"AdjustUpBrightness"},{"title":"\u8c03\u5c0f\u4eae\u5ea6","value":"AdjustDownBrightness"},{"title":"\u8bbe\u7f6e\u6e29\u5ea6","value":"SetTemperature"},{"title":"\u8c03\u9ad8\u6e29\u5ea6","value":"AdjustUpTemperature"},{"title":"\u8c03\u4f4e\u6e29\u5ea6","value":"AdjustDownTemperature"},{"title":"\u8bbe\u7f6e\u98ce\u901f","value":"SetWindSpeed"},{"title":"\u8c03\u5927\u98ce\u901f","value":"AdjustUpWindSpeed"},{"title":"\u8c03\u5c0f\u98ce\u901f","value":"AdjustDownWindSpeed"},{"title":"\u6a21\u5f0f\u7684\u5207\u6362","value":"SetMode"},{"title":"\u8bbe\u7f6e\u989c\u8272","value":"SetColor"},{"title":"\u6253\u5f00\u529f\u80fd","value":"OpenFunction"},{"title":"\u5173\u95ed\u529f\u80fd","value":"CloseFunction"},{"title":"\u67e5\u8be2\u989c\u8272","value":"QueryColor"},{"title":"\u67e5\u8be2\u7535\u6e90\u5f00\u5173","value":"QueryPowerState"},{"title":"\u67e5\u8be2\u6e29\u5ea6","value":"QueryTemperature"},{"title":"\u67e5\u8be2\u6e7f\u5ea6","value":"QueryHumidity"},{"title":"\u67e5\u8be2\u98ce\u901f","value":"QueryWindSpeed"},{"title":"\u67e5\u8be2\u4eae\u5ea6","value":"QueryBrightness"},{"title":"\u67e5\u8be2\u96fe\u91cf","value":"QueryFog"},{"title":"\u67e5\u8be2\u6a21\u5f0f","value":"QueryMode"},{"title":"\u67e5\u8be2pm2.5\u542b\u91cf","value":"QueryPM25"},{"title":"\u67e5\u8be2\u65b9\u5411","value":"QueryDirection"},{"title":"\u67e5\u8be2\u89d2\u5ea6","value":"QueryAngle"}],
-  	  propertiesData:[{"title":"powerstate","name":"\u7535\u6e90\u72b6\u6001","value":"off"},{"title":"color","name":"\u989c\u8272","value":"Red"},{"title":"temperature","name":"\u6e29\u5ea6","value":"1"},{"title":"windspeed","name":"\u98ce\u901f","value":"1"},{"title":"brightness","name":"\u4eae\u5ea6","value":"1"},{"title":"fog","name":"\u96fe\u91cf","value":"1"},{"title":"humidity","name":"\u6e7f\u5ea6","value":"1"},{"title":"pm2.5","name":"pm2.5","value":"1"},{"title":"channel","name":"\u7535\u89c6\u9891\u9053","value":"\u4e1c\u65b9\u536b\u89c6"},{"title":"number","name":"\u7535\u89c6\u9891\u9053\u53f7","value":"1"},{"title":"direction","name":"\u65b9\u5411","value":"left"},{"title":"angle","name":"\u89d2\u5ea6","value":"1"},{"title":"anion","name":"\u8d1f\u79bb\u5b50\u529f\u80fd","value":"off"},{"title":"effluent","name":"\u51fa\u6c34\u529f\u80fd","value":"off"},{"title":"mode","name":"\u6a21\u5f0f","value":"\u53c2\u8003mode auto"},{"title":"lefttime","name":"\u5269\u4f59\u65f6\u95f4","value":"1"},{"title":"remotestatus","name":"\u8bbe\u5907\u8fdc\u7a0b\u72b6\u6001","value":"off"}],
+      propertiesData:[{"title":"powerstate","name":"\u7535\u6e90\u72b6\u6001","value":"off"},{"title":"color","name":"\u989c\u8272","value":"Red"},{"title":"temperature","name":"\u6e29\u5ea6","value":"1"},{"title":"windspeed","name":"\u98ce\u901f","value":"1"},{"title":"brightness","name":"\u4eae\u5ea6","value":"1"},{"title":"fog","name":"\u96fe\u91cf","value":"1"},{"title":"humidity","name":"\u6e7f\u5ea6","value":"1"},{"title":"pm2.5","name":"pm2.5","value":"1"},{"title":"channel","name":"\u7535\u89c6\u9891\u9053","value":"\u4e1c\u65b9\u536b\u89c6"},{"title":"number","name":"\u7535\u89c6\u9891\u9053\u53f7","value":"1"},{"title":"direction","name":"\u65b9\u5411","value":"left"},{"title":"angle","name":"\u89d2\u5ea6","value":"1"},{"title":"anion","name":"\u8d1f\u79bb\u5b50\u529f\u80fd","value":"off"},{"title":"effluent","name":"\u51fa\u6c34\u529f\u80fd","value":"off"},{"title":"mode","name":"\u6a21\u5f0f","value":"\u53c2\u8003mode auto"},{"title":"lefttime","name":"\u5269\u4f59\u65f6\u95f4","value":"1"},{"title":"remotestatus","name":"\u8bbe\u5907\u8fdc\u7a0b\u72b6\u6001","value":"off"}],
       propertiesData1:[{"title":"\u7535\u6e90\u72b6\u6001","value":"powerstate"},{"title":"\u989c\u8272","value":"color"},{"title":"\u6e29\u5ea6","value":"temperature"},{"title":"\u98ce\u901f","value":"windspeed"},{"title":"\u4eae\u5ea6","value":"brightness"},{"title":"\u96fe\u91cf","value":"fog"},{"title":"\u6e7f\u5ea6","value":"humidity"},{"title":"pm2.5","value":"pm2.5"},{"title":"\u7535\u89c6\u9891\u9053","value":"channel"},{"title":"\u7535\u89c6\u9891\u9053\u53f7","value":"number"},{"title":"\u65b9\u5411","value":"direction"},{"title":"\u89d2\u5ea6","value":"angle"},{"title":"\u8d1f\u79bb\u5b50\u529f\u80fd","value":"anion"},{"title":"\u51fa\u6c34\u529f\u80fd","value":"effluent"},{"title":"\u6a21\u5f0f","value":"mode"},{"title":"\u5269\u4f59\u65f6\u95f4","value":"lefttime"},{"title":"\u8bbe\u5907\u8fdc\u7a0b\u72b6\u6001","value":"remotestatus"}],
   
   },
