@@ -520,7 +520,7 @@ var vm = new Vue({
     }, 
     {
       title: "饮水机", 
-      value: "watercooler"
+      value: "waterdispenser"
     }, 
     {
       title: "电饭煲", 
