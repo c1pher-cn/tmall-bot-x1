@@ -269,6 +269,13 @@ function  Device_status($obj)
 	        $action = 'states';
 	        $states=array(array('name'=>'powerstate','value'=>'on'));
 	        foreach($devices as $item) {//遍历包含的子设备
+		    $opts = array(
+                        "http" => array(
+                                "method" => "GET",
+                                "header" => "Content-Type: application/json\r\n"."Authorization: Bearer ".$PASS."\r\n"
+                                )
+                        );
+                    $context = stream_context_create($opts);
 	            $query_response = file_get_contents($URL."/api/".$action."/".$item['deviceId']."?api_password=".$PASS);
 	            $state = json_decode($query_response)->state;
 	
@@ -284,6 +291,13 @@ function  Device_status($obj)
    	     //print_r($devices);//取出该虚拟设备包含的子设备        
    	     $jsonData = str_replace(" ","",$jsonData);
    	     $jsonData = json_decode($jsonData,true);
+		$opts = array(
+                        "http" => array(
+                                "method" => "GET",
+                                "header" => "Content-Type: application/json\r\n"."Authorization: Bearer ".$PASS."\r\n"
+                                )
+                        );
+                $context = stream_context_create($opts);
 		$query_response = file_get_contents($URL."/api/".$action."/".$deviceId."?api_password=".$PASS);
         	$state = json_decode($query_response)->state;
         	$states=array();
@@ -686,7 +700,7 @@ function  Device_control($obj)
     		$opts = array(
 			'http' => array(
 				 'method' => "POST",
-        			 'header' => "Content-Type: application/json",
+				 'header' => "Content-Type: application/json\r\n"."Authorization: Bearer ".$PASS."\r\n",
         			 'content'=> $post_string
         	    		)
 			);
@@ -713,7 +727,7 @@ function  Device_control($obj)
     		$opts = array(
 			'http' => array(
 				 'method' => "POST",
-        			 'header' => "Content-Type: application/json",
+        			 'header' => "Content-Type: application/json\r\n"."Authorization: Bearer ".$PASS."\r\n",
         			 'content'=> $post_string
         	    		)
 			);
