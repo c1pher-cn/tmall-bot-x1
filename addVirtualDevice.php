@@ -25,7 +25,7 @@ $homeassistantURL = $information['homeassistantURL'];
 $homeassistantPASS = $information['homeassistantPASS'];
 $email = $information['email'];
 
-$url = $homeassistantURL."/api/states?api_password=".$homeassistantPASS;
+$url = $homeassistantURL."/api/states";
 $ch = curl_init();
 // set url
 curl_setopt($ch, CURLOPT_HTTPHEADER, array(
