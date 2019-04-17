@@ -276,7 +276,7 @@ function  Device_status($obj)
                                 )
                         );
                     $context = stream_context_create($opts);
-	            $query_response = file_get_contents($URL."/api/".$action."/".$item['deviceId']."?api_password=".$PASS);
+	            $query_response = file_get_contents($URL."/api/".$action."/".$item['deviceId']);
 	            $state = json_decode($query_response)->state;
 	
 	            $a = array ('name'=>$item['title'],'value'=>$state);  
@@ -298,7 +298,7 @@ function  Device_status($obj)
                                 )
                         );
                 $context = stream_context_create($opts);
-		$query_response = file_get_contents($URL."/api/".$action."/".$deviceId."?api_password=".$PASS);
+		$query_response = file_get_contents($URL."/api/".$action."/".$deviceId);
         	$state = json_decode($query_response)->state;
         	$states=array();
         	list($pname) = array_keys($jsonData['properties'][0]);
@@ -315,10 +315,10 @@ function  Device_status($obj)
 
 
 
-	#$query_response = file_get_contents($URL."/api/".$action."/".$deviceId."?api_password=".$PASS);
+	#$query_response = file_get_contents($URL."/api/".$action."/".$deviceId);
         #$state = json_decode($query_response)->state; 	
 	#error_log($state);
-	#error_log($URL."/api/".$action."/".$deviceId."?api_password=".$PASS);
+	#error_log($URL."/api/".$action."/".$deviceId);
 
 	$response = new Response();
         $response->put_query_response(True,$states,$response_name,$deviceId,"","",$obj->header->name);
@@ -706,7 +706,7 @@ function  Device_control($obj)
         	    		)
 			);
 		$context = stream_context_create($opts);
-		$http_post = $URL."/api/services/".$device_ha."/".$action."?api_password=".$PASS;
+		$http_post = $URL."/api/services/".$device_ha."/".$action;
 		#error_log($http_post);
 		$pdt_response = file_get_contents($http_post, false, $context);
 		$response = new Response();
@@ -727,7 +727,7 @@ function  Device_control($obj)
         	    		)
 			);
 		$context = stream_context_create($opts);
-		$http_post = $URL."/api/services/".$device_ha."/".$action."?api_password=".$PASS;
+		$http_post = $URL."/api/services/".$device_ha."/".$action;
 		error_log($http_post);
 		$pdt_response = file_get_contents($http_post, false, $context);
 		$response = new Response();
