@@ -276,7 +276,7 @@ function  Device_status($obj)
                                 )
                         );
                     $context = stream_context_create($opts);
-	            $query_response = file_get_contents($URL."/api/".$action."/".$item['deviceId']);
+	            $query_response = file_get_contents($URL."/api/".$action."/".$item['deviceId'], false, $context);
 	            $state = json_decode($query_response)->state;
 	
 	            $a = array ('name'=>$item['title'],'value'=>$state);  
@@ -298,7 +298,7 @@ function  Device_status($obj)
                                 )
                         );
                 $context = stream_context_create($opts);
-		$query_response = file_get_contents($URL."/api/".$action."/".$deviceId);
+		$query_response = file_get_contents($URL."/api/".$action."/".$deviceId, false, $context);
         	$state = json_decode($query_response)->state;
         	$states=array();
         	list($pname) = array_keys($jsonData['properties'][0]);

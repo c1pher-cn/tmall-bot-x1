@@ -5,7 +5,7 @@ session_start();
 
 if(!empty($_SESSION['userinfo']))
 {
-	header("Location: /information.php");
+	header("Location: information.php");
 }
 $_SESSION['userurl'] = $_SERVER['REQUEST_URI'];
 
@@ -24,7 +24,7 @@ $_SESSION['userurl'] = $_SERVER['REQUEST_URI'];
 <div class="page-bd">
 	<div class="weui_cells_title">请点击登陆</div>
         <div class="weui_btn_area">
-		<a href="<?php echo '/callback.php'?>" target="_parent" class="weui_btn weui_btn bg-blue">登陆</a>
+		<a href="<?php echo 'callback.php'?>" target="_parent" class="weui_btn weui_btn bg-blue">登陆</a>
         </div>
 </div>
     
