@@ -16,7 +16,7 @@ $_SESSION['userurl'] = $_SERVER['REQUEST_URI'];
 <title>天猫精灵设备管理</title>
  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
   <link rel="stylesheet" href="weui/style/weuix.min.css"/>
-  <link rel="icon" href="https://home-assistant.io/demo/favicon-192x192.png">
+  <link rel="icon" href="https://www.home-assistant.io/images/favicon-192x192-full.png">
 
 
       
@@ -121,7 +121,7 @@ var vm = new Vue({
 	nocice:'微博点个赞吧:https://weibo.com/1147593092/Ga4E4oMaN?type=comment',
 	logo:[
 		{"img":"https://bbs.hassbian.com/static/image/common/logo.png","link":"https://bbs.hassbian.com"},
-		{"img":"https://home-assistant.io/demo/favicon-192x192.png","link":"javascript:;"},
+		{"img":"https://www.home-assistant.io/images/favicon-192x192-full.png","link":"javascript:;"},
 	],
 			},
 			//HomeAssistant_deviceList:

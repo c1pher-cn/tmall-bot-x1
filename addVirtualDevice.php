@@ -394,7 +394,7 @@ var vm = new Vue({
       zone:'客厅',
       brand:'HASS',
       model:'HA',
-      icon: "https://home-assistant.io/demo/favicon-192x192.png",
+      icon: "https://www.home-assistant.io/images/favicon-192x192-full.png",
       actions:[],
       properties:[],
       deviceList:[

@@ -106,7 +106,7 @@ elseif ($v=="getNotice"){//到我的服务器获取版本更新完善的消息�
 			\"updataLink\": \"https://bbs.hassbian.com/thread-2982-1-1.html\",
 			\"logo\": [
 		{\"img\": \"https://bbs.hassbian.com/static/image/common/logo.png\",\"link\": \"https://bbs.hassbian.com/thread-2982-1-1.html\"},
-		{\"img\": \"https://home-assistant.io/demo/favicon-192x192.png\",\"link\": \"javascript:;\"}]}}";
+		{\"img\": \"https://www.home-assistant.io/images/favicon-192x192-full.png\",\"link\": \"javascript:;\"}]}}";
 	
 
 }
