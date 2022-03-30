@@ -23,7 +23,9 @@ https://github.com/bshaffer/oauth2-server-php/blob/php5.2-develop/README.md
   
    	
 其他设备类型可能我没有的请提交设备id私信给我	
+
 微博 https://weibo.com/u/1147593092
+
 b站  https://space.bilibili.com/15856864
   
    
