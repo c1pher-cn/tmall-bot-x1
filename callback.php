@@ -18,7 +18,7 @@
 		$_SESSION['userurl']='null';
 	}else
 	{  
-		header("Location: /information.php");
+		header("Location: information.php");
 	}
 
 ?>

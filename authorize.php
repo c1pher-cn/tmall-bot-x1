@@ -20,7 +20,7 @@ if (!$server->validateAuthorizeRequest($request, $response)) {
 if(empty($_SESSION)||empty($_SESSION['userinfo']))
 {
 	$_SESSION['userurl'] = $_SERVER['REQUEST_URI'];
-	header("Location: /index.php");
+	header("Location: index.php");
 }
 if (empty($_POST)) {
 exit('

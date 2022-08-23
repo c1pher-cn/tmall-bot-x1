@@ -5,7 +5,7 @@ session_start();
 if(empty($_SESSION)||empty($_SESSION['userinfo']))
 {
         $_SESSION['userurl'] = $_SERVER['REQUEST_URI'];
-	header("Location: /index.php");
+	header("Location: index.php");
 }
 $user_id = $_SESSION['userinfo']['user_id'];
 $user_name = $_SESSION['userinfo']['user_name'];

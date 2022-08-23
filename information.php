@@ -7,7 +7,7 @@ error_log(empty($_SESSION));
 if(empty($_SESSION)||empty($_SESSION['userinfo']))
 {
 	$_SESSION['userurl'] = $_SERVER['REQUEST_URI'];
-	header("Location: /index.php");
+	header("Location: index.php");
 }
 
 
