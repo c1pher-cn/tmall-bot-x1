@@ -29,4 +29,7 @@ https://github.com/bshaffer/oauth2-server-php/blob/php5.2-develop/README.md
 b站  https://space.bilibili.com/15856864
   
    
-部署配置方法详见我的博客:           https://www.c1pher.cn/?p=170
+部署配置方法详见论坛:          
+
+https://bbs.hassbian.com/thread-1862-1-1.html
+
